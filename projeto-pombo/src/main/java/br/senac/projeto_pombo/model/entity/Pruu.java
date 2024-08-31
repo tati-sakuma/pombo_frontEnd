@@ -36,5 +36,5 @@ public class Pruu {
 	@ManyToOne
     @JoinColumn(name="id_usuario", nullable=false)
 	private Usuario usuario;
-	 
+	
 }
