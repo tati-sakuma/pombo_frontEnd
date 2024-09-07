@@ -1,8 +1,8 @@
 package br.senac.projeto_pombo.exception;
 
 @SuppressWarnings("serial")
-public class PruuException extends Exception {
-	public PruuException(String mensagem) {
+public class PomboException extends Exception {
+	public PomboException(String mensagem) {
 		super(mensagem);
 	}
 }
