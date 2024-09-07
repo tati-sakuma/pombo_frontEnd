@@ -34,7 +34,7 @@ public class UsuarioService {
 		return repository.save(usuario);
 	}
 	
-	public Usuario excluir(Integer id) {
-		return null;
+	public void excluir(Integer id) {
+		repository.deleteById(id);
 	}
 }
