@@ -16,12 +16,16 @@ public class PruuService {
 	@Autowired
 	private PruuRepository repository;
 	
-	public List<Pruu> listarTodos(){
+	public List<Pruu> pesquisarTodos(){
 		return repository.findAll();
 	}
 	
 	public Pruu pesquisarId(UUID id) {
 		return repository.findById(id).get();
+	}
+	
+	public List<Pruu> pesquisarPorIdUsuario (Integer idUsuario) {
+		return repository.findbyIdUsuario(idUsuario);
 	}
 	
 	public Pruu salvar(Pruu mensagem) {
