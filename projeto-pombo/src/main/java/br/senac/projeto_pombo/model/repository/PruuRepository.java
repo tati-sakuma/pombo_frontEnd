@@ -14,6 +14,10 @@ import br.senac.projeto_pombo.model.entity.Pruu;
 @Repository
 public interface PruuRepository extends JpaRepository<Pruu, UUID>, JpaSpecificationExecutor<Pruu> {
 
-	@Query("SELECT p FROM Pruu p WHERE p.usuario.id = :idUsuario")
+	@Query("SELECT p FROM Pruu p WHERE p.usuario.id = :idUsuario ORDER BY p.dataHora DESC")
 	public List<Pruu> findbyIdUsuario(Integer idUsuario);
+	
+	@Query("SELECT p FROM Pruu p ORDER BY p.dataHora DESC")
+    public List<Pruu> findAllOrderedByDataHora();
+
 }

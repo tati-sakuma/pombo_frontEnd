@@ -35,12 +35,14 @@ public class Pruu {
 	private Integer curtidas;
 	@ColumnDefault("0")
 	private Integer deuncias;
+	
 	@ColumnDefault("false")
 	private Boolean bloqueado;
 	
 	@ManyToOne
     @JoinColumn(name="id_usuario", nullable=false)
 	private Usuario usuario;
+	
 	@OneToMany(mappedBy = "pruu")
 	private Set<Curtida> curtidasUsuarios;
 }

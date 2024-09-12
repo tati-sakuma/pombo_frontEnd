@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.senac.projeto_pombo.exception.PomboException;
@@ -40,7 +41,7 @@ public class PruuController {
 	
 	
 	@Operation(summary = "Pesquisa mensagem pelo ID do usuário")
-	@GetMapping(path = "/{idUsuario}")
+	@GetMapping(path = "/idusuario/{idUsuario}")
 	public List<Pruu> pesquisarPorIdUsuario(@PathVariable Integer idUsuario) {
 		return service.pesquisarPorIdUsuario(idUsuario);
 	}
@@ -59,9 +60,14 @@ public class PruuController {
 	}
 	
 	@Operation(summary = "Exclui mensagem")
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/excluir/{id}")
 	public void excluir(@PathVariable UUID id) {
 		service.excluir(id);
 	}
 
+	@PostMapping("/curtida/{idPruu}")
+	public void novaCurtidaNoPruu(@PathVariable UUID idPruu, @RequestParam Integer idUsuario) throws PomboException {
+		service.novaCurtidaNoPruu(idPruu, idUsuario);
+	}
+	
 }
