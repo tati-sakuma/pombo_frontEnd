@@ -1,6 +1,7 @@
 package br.senac.projeto_pombo.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.senac.projeto_pombo.exception.PomboException;
@@ -76,5 +78,11 @@ public class UsuarioController {
 	public ResponseEntity<Void> excluirId(@PathVariable Integer id) {
 		service.excluir(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@Operation(summary = "Chuta o pombo. Às vezes o pombo se passa...")
+	@PostMapping("/bloquear/{idPruu}")
+	public void bloquearPruu(@RequestParam Integer idUsuario, @PathVariable UUID idPruu) throws PomboException {
+		service.bloquearPruu(idUsuario, idPruu);
 	}
 }
