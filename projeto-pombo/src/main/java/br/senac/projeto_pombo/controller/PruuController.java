@@ -1,6 +1,7 @@
 package br.senac.projeto_pombo.controller;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class PruuController {
 	
 	@Autowired
 	private PruuService service;
+	
+	
 	
 	@Operation(summary = "Lista todas as mensagens")
 	@GetMapping
@@ -65,9 +68,21 @@ public class PruuController {
 		service.excluir(id);
 	}
 
+	@Operation(summary = "Joga uma pipoca pro pombo")
 	@PostMapping("/curtida/{idPruu}")
 	public void novaCurtidaNoPruu(@PathVariable UUID idPruu, @RequestParam Integer idUsuario) throws PomboException {
 		service.novaCurtidaNoPruu(idPruu, idUsuario);
 	}
 	
+	@Operation(summary = "Quantidades de curtidas")
+	@GetMapping("/curtidas")
+	public Integer qtdeCurtidas(UUID idPruu) {
+		return service.qtdeCurtidas(idPruu);
+	}
+	
+	@Operation(summary = "Usuários que curtiram")
+	@GetMapping("/curtidas/usuarios")
+	public Set<String> usuariosQueCurtiram(UUID idPruu) {
+		return service.usuariosQueCurtiram(idPruu);
+	}
 }

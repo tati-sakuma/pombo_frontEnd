@@ -1,6 +1,8 @@
 package br.senac.projeto_pombo.service;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,30 +59,33 @@ public class PruuService {
 	
 	
 	@Transactional
-    public void novaCurtidaNoPruu(UUID pruuId, Integer usuarioId) throws PomboException {
-        Pruu pruu = repository.findById(pruuId)
+    public void novaCurtidaNoPruu(UUID idPruu, Integer idUsuario) throws PomboException {
+        Pruu pruu = repository.findById(idPruu)
                 .orElseThrow(() -> new PomboException("Pruu não localizado!"));
-        Usuario usuario = usuarioRepository.findById(usuarioId)
+        Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
-        CurtidaPk id = new CurtidaPk(usuarioId, pruuId);
-        if (curtidaRepository.existsById(id)) {
-            throw new PomboException("Usuário já curtiu esse Pruu!");
-        }
-
+        CurtidaPk id = new CurtidaPk(idUsuario, idPruu);
         Curtida curtida = new Curtida();
+        if (curtidaRepository.existsById(id)) {
+        	
+        	Integer descurtida =  this.qtdeCurtidas(idPruu) -1 ;
+            pruu.setCurtidas(descurtida);
+        	
+        } else {
+
         curtida.setId(id);
         curtida.setPruu(pruu);
         curtida.setUsuario(usuario); 
 
         curtidaRepository.save(curtida);
-        updateContarCurtidas(pruuId);
+        updateContarCurtidas(idPruu);
     }
-	
+	}
 	
 	public void updateContarCurtidas(UUID idPruu) throws PomboException {
 		
-		Integer count = curtidaRepository.countCurtidasByPruuId(idPruu);
+		Integer count = this.qtdeCurtidas(idPruu);
 		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
 		
 		pruu.setCurtidas(count);
@@ -88,6 +93,22 @@ public class PruuService {
 	}
 	
 	
+	public Integer qtdeCurtidas(UUID idPruu) {
+		return curtidaRepository.countCurtidasByPruuId(idPruu);
+	}
 	
+	public Set<String> usuariosQueCurtiram(UUID idPruu){
+		Set<Integer> idUsuariosQueCurtiramOPruu = curtidaRepository.findUsuariosQueCurtiram(idPruu);
+		
+		Set<String> usuariosQCurtiram = new LinkedHashSet<>();
+		
+		for(Integer idUsuario : idUsuariosQueCurtiramOPruu) {
+			Usuario usuario = usuarioRepository.findById(idUsuario).get();
+			
+			usuariosQCurtiram.add(usuario.getNome());
+		}
+		
+		return usuariosQCurtiram;
+	}
 	
 }
