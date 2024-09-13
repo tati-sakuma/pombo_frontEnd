@@ -25,16 +25,15 @@ public class Usuario {
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false)
-	//@CPF
+	// @CPF
 	private String cpf;
 	@ColumnDefault("false")
 	private Boolean administrador;
-	
-	@OneToMany(mappedBy="usuario")
+
+	@OneToMany(mappedBy = "usuario")
 	private Set<Pruu> pruus;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	private Set<Curtida> pruusCurtidos;
 
-	
 }

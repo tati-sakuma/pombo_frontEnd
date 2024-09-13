@@ -23,92 +23,89 @@ public class PruuService {
 
 	@Autowired
 	private PruuRepository repository;
-	
+
 	@Autowired
 	private CurtidaRepository curtidaRepository;
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	public List<Pruu> pesquisarTodos(){
+
+	public List<Pruu> pesquisarTodos() {
 		return repository.findAllOrderedByDataHora();
 	}
-	
+
 	public Pruu pesquisarId(UUID id) {
 		return repository.findById(id).get();
 	}
-	
-	public List<Pruu> pesquisarPorIdUsuario (Integer idUsuario) {
+
+	public List<Pruu> pesquisarPorIdUsuario(Integer idUsuario) {
 		return repository.findbyIdUsuario(idUsuario);
 	}
-	
+
 	public Pruu salvar(Pruu mensagem) {
 		return repository.save(mensagem);
 	}
-	
-	public Pruu atualizar (Pruu mensagem) throws PomboException{
-		if(mensagem.getIdPruu() == null) {
+
+	public Pruu atualizar(Pruu mensagem) throws PomboException {
+		if (mensagem.getIdPruu() == null) {
 			throw new PomboException("Informe o ID da mensagem");
 		}
 		return repository.save(mensagem);
 	}
-	
+
 	public void excluir(UUID id) {
 		repository.deleteById(id);
 	}
-	
-	
+
 	@Transactional
-    public void novaCurtidaNoPruu(UUID idPruu, Integer idUsuario) throws PomboException {
-        Pruu pruu = repository.findById(idPruu)
-                .orElseThrow(() -> new PomboException("Pruu não localizado!"));
-        Usuario usuario = usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new PomboException("Usuário não localizado!"));
+	public void novaCurtidaNoPruu(UUID idPruu, Integer idUsuario) throws PomboException {
+		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
+		Usuario usuario = usuarioRepository.findById(idUsuario)
+				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
-        CurtidaPk id = new CurtidaPk(idUsuario, idPruu);
-        Curtida curtida = new Curtida();
-        if (curtidaRepository.existsById(id)) {
-        	
-        	Integer descurtida =  this.qtdeCurtidas(idPruu) -1 ;
-            pruu.setCurtidas(descurtida);
-        	
-        } else {
+		CurtidaPk id = new CurtidaPk(idUsuario, idPruu);
+		Curtida curtida = new Curtida();
+		if (curtidaRepository.existsById(id)) {
 
-        curtida.setId(id);
-        curtida.setPruu(pruu);
-        curtida.setUsuario(usuario); 
+			Integer descurtida = this.qtdeCurtidas(idPruu) - 1;
+			pruu.setCurtidas(descurtida);
 
-        curtidaRepository.save(curtida);
-        updateContarCurtidas(idPruu);
-    }
+		} else {
+
+			curtida.setId(id);
+			curtida.setPruu(pruu);
+			curtida.setUsuario(usuario);
+
+			curtidaRepository.save(curtida);
+			updateContarCurtidas(idPruu);
+		}
 	}
-	
+
 	public void updateContarCurtidas(UUID idPruu) throws PomboException {
-		
+
 		Integer count = this.qtdeCurtidas(idPruu);
 		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
-		
+
 		pruu.setCurtidas(count);
 		repository.save(pruu);
 	}
-	
-	
+
 	public Integer qtdeCurtidas(UUID idPruu) {
 		return curtidaRepository.countCurtidasByPruuId(idPruu);
 	}
-	
-	public Set<String> usuariosQueCurtiram(UUID idPruu){
+
+	public Set<String> usuariosQueCurtiram(UUID idPruu) {
 		Set<Integer> idUsuariosQueCurtiramOPruu = curtidaRepository.findUsuariosQueCurtiram(idPruu);
-		
+
 		Set<String> usuariosQCurtiram = new LinkedHashSet<String>();
-		
-		for(Integer idUsuario : idUsuariosQueCurtiramOPruu) {
+
+		for (Integer idUsuario : idUsuariosQueCurtiramOPruu) {
 			Usuario usuario = usuarioRepository.findById(idUsuario).get();
-			
+
 			usuariosQCurtiram.add(usuario.getNome());
 		}
-		
+
 		return usuariosQCurtiram;
 	}
-	
+
 }

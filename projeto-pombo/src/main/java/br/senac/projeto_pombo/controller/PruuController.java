@@ -23,45 +23,41 @@ import io.swagger.v3.oas.annotations.Operation;
 @RestController
 @RequestMapping(path = "/api/pruu")
 public class PruuController {
-	
-	
+
 	@Autowired
 	private PruuService service;
-	
-	
-	
+
 	@Operation(summary = "Lista todas as mensagens")
 	@GetMapping
 	public List<Pruu> pesquisarTodos() {
 		return service.pesquisarTodos();
 	}
-	
+
 	@Operation(summary = "Pesquisa mensagem pelo ID")
 	@GetMapping(path = "/{id}")
 	public Pruu pesquisarId(@PathVariable UUID id) {
 		return service.pesquisarId(id);
 	}
-	
-	
+
 	@Operation(summary = "Pesquisa mensagem pelo ID do usuário")
 	@GetMapping(path = "/idusuario/{idUsuario}")
 	public List<Pruu> pesquisarPorIdUsuario(@PathVariable Integer idUsuario) {
 		return service.pesquisarPorIdUsuario(idUsuario);
 	}
-	
+
 	@Operation(summary = "Salva nova mensagem")
 	@PostMapping
 	public Pruu salvar(@RequestBody Pruu mensagem) {
 		return service.salvar(mensagem);
 	}
-	
+
 	@Operation(summary = "Atualiza mensagem")
 	@PutMapping
-	public Pruu atualizar (@RequestBody Pruu mensagem) throws PomboException{
-		
+	public Pruu atualizar(@RequestBody Pruu mensagem) throws PomboException {
+
 		return service.atualizar(mensagem);
 	}
-	
+
 	@Operation(summary = "Exclui mensagem")
 	@DeleteMapping("/excluir/{id}")
 	public void excluir(@PathVariable UUID id) {
@@ -73,13 +69,13 @@ public class PruuController {
 	public void novaCurtidaNoPruu(@PathVariable UUID idPruu, @RequestParam Integer idUsuario) throws PomboException {
 		service.novaCurtidaNoPruu(idPruu, idUsuario);
 	}
-	
+
 	@Operation(summary = "Quantidades de curtidas")
 	@GetMapping("/curtidas")
 	public Integer qtdeCurtidas(UUID idPruu) {
 		return service.qtdeCurtidas(idPruu);
 	}
-	
+
 	@Operation(summary = "Usuários que curtiram")
 	@GetMapping("/curtidas/usuarios")
 	public Set<String> usuariosQueCurtiram(UUID idPruu) {

@@ -20,13 +20,13 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
-	
+
 	@Autowired
 	private PruuRepository pruuRepository;
-	
+
 	@Autowired
 	private CurtidaRepository curtidaRepository;
-	
+
 	public List<Usuario> pesquisarTodos() {
 		return repository.findAll();
 	}
@@ -52,26 +52,27 @@ public class UsuarioService {
 
 	public void bloquearPruu(Integer idUsuario, UUID idPruu) throws PomboException {
 		Pruu pruu = pruuRepository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
-		Usuario usuario = repository.findById(idUsuario).orElseThrow(() -> new PomboException("Usuário não localizado!"));
-		
-		if (usuario.getAdministrador()){
+		Usuario usuario = repository.findById(idUsuario)
+				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
+
+		if (usuario.getAdministrador()) {
 			pruu.setBloqueado(true);
 			pruuRepository.save(pruu);
 		} else {
 			throw new PomboException("Usuário não é administrador. Não é possível fazer o bloqueio do pruu.");
 		}
 	}
-	
-	public Set<String> pruusQueUsuarioCurtiu(Integer idUsuario){
+
+	public Set<String> pruusQueUsuarioCurtiu(Integer idUsuario) {
 		Set<UUID> idPruusCurtidosPeloUsuario = curtidaRepository.findPruuQueUsuarioCurtiu(idUsuario);
 		Set<String> pruusCurtidos = new LinkedHashSet<String>();
-		
-		for(UUID idPruu : idPruusCurtidosPeloUsuario) {
+
+		for (UUID idPruu : idPruusCurtidosPeloUsuario) {
 			Pruu pruu = pruuRepository.findById(idPruu).get();
-			
+
 			pruusCurtidos.add(pruu.getMensagem());
 		}
-		
+
 		return pruusCurtidos;
 	}
 }
