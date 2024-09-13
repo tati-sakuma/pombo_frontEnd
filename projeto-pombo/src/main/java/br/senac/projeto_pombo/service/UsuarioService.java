@@ -49,11 +49,21 @@ public class UsuarioService {
 	public void excluir(Integer id) {
 		repository.deleteById(id);
 	}
+	
+	public Set<String> pruusDoUsuario(Integer idUsuario) {
+		List<Pruu> pruus = pruuRepository.findbyIdUsuario(idUsuario);
+		Set<String> pruusDoUsuario = new LinkedHashSet<String>();
+		
+		for(Pruu pruu : pruus) {
+			pruusDoUsuario.add(pruu.getMensagem());
+		}
+		
+		return pruusDoUsuario;
+	}
 
 	public void bloquearPruu(Integer idUsuario, UUID idPruu) throws PomboException {
 		Pruu pruu = pruuRepository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
-		Usuario usuario = repository.findById(idUsuario)
-				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
+		Usuario usuario = repository.findById(idUsuario).orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
 		if (usuario.getAdministrador()) {
 			pruu.setBloqueado(true);

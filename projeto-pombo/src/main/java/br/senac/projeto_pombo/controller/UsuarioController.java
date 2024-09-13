@@ -65,7 +65,13 @@ public class UsuarioController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@Operation(summary = "Chuta o pombo. Às vezes o pombo se passa...")
+	@Operation(summary = "Pruus do usuario")
+	@GetMapping(path = "/meusPruus/{idUsuario}")
+	public Set<String> pruusDoUsuario(@PathVariable Integer idUsuario) {
+		return service.pruusDoUsuario(idUsuario);
+	}
+	
+	@Operation(summary = "Bloqueia o pruu.", description = "Às vezes o pombo se passa...")
 	@PostMapping("/bloquear/{idPruu}")
 	public void bloquearPruu(@RequestParam Integer idUsuario, @PathVariable UUID idPruu) throws PomboException {
 		service.bloquearPruu(idUsuario, idPruu);
