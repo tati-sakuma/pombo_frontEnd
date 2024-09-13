@@ -1,6 +1,8 @@
 package br.senac.projeto_pombo.service;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.entity.Pruu;
 import br.senac.projeto_pombo.model.entity.Usuario;
+import br.senac.projeto_pombo.model.repository.CurtidaRepository;
 import br.senac.projeto_pombo.model.repository.PruuRepository;
 import br.senac.projeto_pombo.model.repository.UsuarioRepository;
 
@@ -20,8 +23,10 @@ public class UsuarioService {
 	
 	@Autowired
 	private PruuRepository pruuRepository;
-
-
+	
+	@Autowired
+	private CurtidaRepository curtidaRepository;
+	
 	public List<Usuario> pesquisarTodos() {
 		return repository.findAll();
 	}
@@ -55,5 +60,18 @@ public class UsuarioService {
 		} else {
 			throw new PomboException("Usuário não é administrador. Não é possível fazer o bloqueio do pruu.");
 		}
+	}
+	
+	public Set<String> pruusQueUsuarioCurtiu(Integer idUsuario){
+		Set<UUID> idPruusCurtidosPeloUsuario = curtidaRepository.findPruuQueUsuarioCurtiu(idUsuario);
+		Set<String> pruusCurtidos = new LinkedHashSet<String>();
+		
+		for(UUID idPruu : idPruusCurtidosPeloUsuario) {
+			Pruu pruu = pruuRepository.findById(idPruu).get();
+			
+			pruusCurtidos.add(pruu.getMensagem());
+		}
+		
+		return pruusCurtidos;
 	}
 }

@@ -1,6 +1,7 @@
 package br.senac.projeto_pombo.controller;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,4 +86,12 @@ public class UsuarioController {
 	public void bloquearPruu(@RequestParam Integer idUsuario, @PathVariable UUID idPruu) throws PomboException {
 		service.bloquearPruu(idUsuario, idPruu);
 	}
+	
+	@Operation(summary = "Pruus curtidos pelo usuario")
+	@GetMapping(path = "/curtida/{idUsuario}")
+	public Set<String> pruusQueUsuarioCurtiu (@PathVariable Integer idUsuario){
+		return service.pruusQueUsuarioCurtiu(idUsuario);
+	}
+	
+	
 }

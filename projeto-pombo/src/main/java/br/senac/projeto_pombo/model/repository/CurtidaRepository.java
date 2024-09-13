@@ -19,4 +19,6 @@ public interface CurtidaRepository extends JpaRepository<Curtida, CurtidaPk>{
 	@Query("SELECT c.usuario.id FROM Curtida c WHERE c.pruu.id = :idPruu")
 	Set<Integer> findUsuariosQueCurtiram(@Param("idPruu") UUID idPruu);
 
+	@Query("SELECT c.pruu.id FROM Curtida c WHERE c.usuario.id = :idUsuario")
+	Set<UUID> findPruuQueUsuarioCurtiu(@Param("idUsuario") Integer idUsuario);
 }

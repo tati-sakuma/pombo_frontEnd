@@ -100,7 +100,7 @@ public class PruuService {
 	public Set<String> usuariosQueCurtiram(UUID idPruu){
 		Set<Integer> idUsuariosQueCurtiramOPruu = curtidaRepository.findUsuariosQueCurtiram(idPruu);
 		
-		Set<String> usuariosQCurtiram = new LinkedHashSet<>();
+		Set<String> usuariosQCurtiram = new LinkedHashSet<String>();
 		
 		for(Integer idUsuario : idUsuariosQueCurtiramOPruu) {
 			Usuario usuario = usuarioRepository.findById(idUsuario).get();
