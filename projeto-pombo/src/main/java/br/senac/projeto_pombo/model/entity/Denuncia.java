@@ -1,5 +1,7 @@
 package br.senac.projeto_pombo.model.entity;
 
+import java.time.LocalDateTime;
+
 import br.senac.projeto_pombo.model.entity.enums.TiposDenuncia;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -26,4 +28,5 @@ public class Denuncia {
 	Pruu pruu;
 	 
 	private TiposDenuncia motivo;
+	private LocalDateTime dataDenuncia;
 }
