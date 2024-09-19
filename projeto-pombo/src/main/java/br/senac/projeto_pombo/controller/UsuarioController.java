@@ -73,7 +73,7 @@ public class UsuarioController {
 	
 	@Operation(summary = "Bloqueia o pruu.", description = "Às vezes o pombo se passa...")
 	@PostMapping("/bloquear/{idPruu}")
-	public void bloquearPruu(@RequestParam Integer idUsuario, @PathVariable UUID idPruu) throws PomboException {
+	public void bloquearPruu(@RequestParam Integer idUsuario, @PathVariable String idPruu) throws PomboException {
 		service.bloquearPruu(idUsuario, idPruu);
 	}
 

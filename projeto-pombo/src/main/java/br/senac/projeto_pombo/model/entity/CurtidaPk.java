@@ -19,6 +19,6 @@ public class CurtidaPk implements Serializable {
 	Integer idUsuario;
 	
 	@Column(name = "id_pruu")
-	UUID idPruu;
+	String idPruu;
 	
 }

@@ -3,7 +3,6 @@ package br.senac.projeto_pombo.service;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +60,7 @@ public class UsuarioService {
 		return pruusDoUsuario;
 	}
 
-	public void bloquearPruu(Integer idUsuario, UUID idPruu) throws PomboException {
+	public void bloquearPruu(Integer idUsuario, String idPruu) throws PomboException {
 		Pruu pruu = pruuRepository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
 		Usuario usuario = repository.findById(idUsuario).orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
@@ -74,10 +73,10 @@ public class UsuarioService {
 	}
 
 	public Set<String> pruusQueUsuarioCurtiu(Integer idUsuario) {
-		Set<UUID> idPruusCurtidosPeloUsuario = curtidaRepository.findPruuQueUsuarioCurtiu(idUsuario);
+		Set<String> idPruusCurtidosPeloUsuario = curtidaRepository.findPruuQueUsuarioCurtiu(idUsuario);
 		Set<String> pruusCurtidos = new LinkedHashSet<String>();
 
-		for (UUID idPruu : idPruusCurtidosPeloUsuario) {
+		for (String idPruu : idPruusCurtidosPeloUsuario) {
 			Pruu pruu = pruuRepository.findById(idPruu).get();
 
 			pruusCurtidos.add(pruu.getMensagem());

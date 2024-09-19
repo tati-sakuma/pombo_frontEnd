@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ import lombok.Data;
 @Table
 public class Pruu {
 	@Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idPruu;
+    @UuidGenerator
+    private String idPruu;
 	@NotBlank(message = "Use sua criatividade! Digite algo!")
 	@Size(min = 1, max = 300)
 	private String mensagem;
@@ -34,7 +35,7 @@ public class Pruu {
 	@ColumnDefault("0")
 	private Integer curtidas;
 	@ColumnDefault("0")
-	private Integer deuncias;
+	private Integer denuncias;
 	
 	@ColumnDefault("false")
 	private Boolean bloqueado;

@@ -3,7 +3,6 @@ package br.senac.projeto_pombo.service;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class PruuService {
 		return repository.findAllOrderedByDataHora();
 	}
 
-	public Pruu pesquisarId(UUID id) {
+	public Pruu pesquisarId(String id) {
 		return repository.findById(id).get();
 	}
 
@@ -53,12 +52,12 @@ public class PruuService {
 		return repository.save(mensagem);
 	}
 
-	public void excluir(UUID id) {
+	public void excluir(String id) {
 		repository.deleteById(id);
 	}
 
 	@Transactional
-	public void novaCurtidaNoPruu(UUID idPruu, Integer idUsuario) throws PomboException {
+	public void novaCurtidaNoPruu(String idPruu, Integer idUsuario) throws PomboException {
 		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
 		Usuario usuario = usuarioRepository.findById(idUsuario)
 				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
@@ -81,7 +80,7 @@ public class PruuService {
 		}
 	}
 
-	public void updateContarCurtidas(UUID idPruu) throws PomboException {
+	public void updateContarCurtidas(String idPruu) throws PomboException {
 
 		Integer count = this.qtdeCurtidas(idPruu);
 		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
@@ -90,11 +89,11 @@ public class PruuService {
 		repository.save(pruu);
 	}
 
-	public Integer qtdeCurtidas(UUID idPruu) {
+	public Integer qtdeCurtidas(String idPruu) {
 		return curtidaRepository.countCurtidasByPruuId(idPruu);
 	}
 
-	public Set<String> usuariosQueCurtiram(UUID idPruu) {
+	public Set<String> usuariosQueCurtiram(String idPruu) {
 		Set<Integer> idUsuariosQueCurtiramOPruu = curtidaRepository.findUsuariosQueCurtiram(idPruu);
 
 		Set<String> usuariosQCurtiram = new LinkedHashSet<String>();

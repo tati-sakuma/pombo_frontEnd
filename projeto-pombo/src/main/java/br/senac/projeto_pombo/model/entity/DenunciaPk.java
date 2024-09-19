@@ -1,7 +1,5 @@
 package br.senac.projeto_pombo.model.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
@@ -16,5 +14,5 @@ public class DenunciaPk {
 	Integer idUsuario;
 	
 	@Column(name = "id_pruu")
-	UUID idPruu;
+	String idPruu;
 }

@@ -2,7 +2,6 @@ package br.senac.projeto_pombo.controller;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +34,7 @@ public class PruuController {
 
 	@Operation(summary = "Pesquisa mensagem pelo ID")
 	@GetMapping(path = "/{id}")
-	public Pruu pesquisarId(@PathVariable UUID id) {
+	public Pruu pesquisarId(@PathVariable String id) {
 		return service.pesquisarId(id);
 	}
 
@@ -60,25 +59,25 @@ public class PruuController {
 
 	@Operation(summary = "Exclui mensagem")
 	@DeleteMapping("/excluir/{id}")
-	public void excluir(@PathVariable UUID id) {
+	public void excluir(@PathVariable String id) {
 		service.excluir(id);
 	}
 
 	@Operation(summary = "Joga uma pipoca pro pombo")
 	@PostMapping("/curtida/{idPruu}")
-	public void novaCurtidaNoPruu(@PathVariable UUID idPruu, @RequestParam Integer idUsuario) throws PomboException {
+	public void novaCurtidaNoPruu(@PathVariable String idPruu, @RequestParam Integer idUsuario) throws PomboException {
 		service.novaCurtidaNoPruu(idPruu, idUsuario);
 	}
 
 	@Operation(summary = "Quantidades de curtidas")
 	@GetMapping("/curtidas")
-	public Integer qtdeCurtidas(UUID idPruu) {
+	public Integer qtdeCurtidas(String idPruu) {
 		return service.qtdeCurtidas(idPruu);
 	}
 
 	@Operation(summary = "Usuários que curtiram")
 	@GetMapping("/curtidas/usuarios")
-	public Set<String> usuariosQueCurtiram(UUID idPruu) {
+	public Set<String> usuariosQueCurtiram(String idPruu) {
 		return service.usuariosQueCurtiram(idPruu);
 	}
 }

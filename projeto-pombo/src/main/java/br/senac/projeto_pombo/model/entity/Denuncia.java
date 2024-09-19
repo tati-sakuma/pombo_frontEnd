@@ -29,4 +29,5 @@ public class Denuncia {
 	 
 	private TiposDenuncia motivo;
 	private LocalDateTime dataDenuncia;
+	private Boolean analisada;
 }
