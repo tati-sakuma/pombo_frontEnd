@@ -68,7 +68,8 @@ public class PruuService {
 
 			Integer descurtida = this.qtdeCurtidas(idPruu) - 1;
 			pruu.setCurtidas(descurtida);
-
+			updateContarCurtidas(idPruu);
+			
 		} else {
 
 			curtida.setId(id);
