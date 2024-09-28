@@ -5,6 +5,8 @@ import java.util.Set;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,9 +48,7 @@ public class Usuario {
 	@ColumnDefault(value = "false")
 	private Boolean administrador = false;
 
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-	private Set<Pruu> pruus;
-
+	@JsonBackReference
 	@OneToMany(mappedBy = "usuario")
 	private Set<Curtida> pruusCurtidos;
 

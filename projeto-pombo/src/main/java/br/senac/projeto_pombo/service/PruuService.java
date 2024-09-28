@@ -77,30 +77,23 @@ public class PruuService {
 				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
 		CurtidaPk id = new CurtidaPk(idUsuario, idPruu);
-		Curtida curtida = new Curtida();
+		
 		if (curtidaRepository.existsById(id)) {
-
-			Integer descurtida = this.qtdeCurtidas(idPruu) - 1;
-			pruu.setCurtidas(descurtida);
-			updateContarCurtidas(idPruu);
+			
+			curtidaRepository.deleteById(id); 
+	        pruu.setCurtidas(pruu.getCurtidas() - 1);
 			
 		} else {
 
+			Curtida curtida = new Curtida();
 			curtida.setId(id);
 			curtida.setPruu(pruu);
 			curtida.setUsuario(usuario);
 
 			curtidaRepository.save(curtida);
-			updateContarCurtidas(idPruu);
+			pruu.setCurtidas(pruu.getCurtidas() + 1);
 		}
-	}
-
-	public void updateContarCurtidas(String idPruu) throws PomboException {
-
-		Integer count = this.qtdeCurtidas(idPruu);
-		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
-
-		pruu.setCurtidas(count);
+		
 		repository.save(pruu);
 	}
 

@@ -44,6 +44,6 @@ public class UsuarioSeletor extends BaseSeletor implements Specification<Usuario
 		}
 		
 		return cb.and(condicoes.toArray(new Predicate[0]));
-	}
+	}  
 
 }
