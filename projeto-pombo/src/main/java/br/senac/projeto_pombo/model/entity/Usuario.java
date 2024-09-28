@@ -3,7 +3,9 @@ package br.senac.projeto_pombo.model.entity;
 import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +14,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
@@ -21,15 +26,25 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;
+	
 	@Column(nullable = false)
+	@NotBlank(message = "Nome é obrigatório")
+	@Size(min = 3, max = 255)
 	private String nome;
+	
+	@NotBlank(message = "E-mail é obrigatório")
 	@Column(nullable = false)
+	@Email
 	private String email;
+	
+	@NotBlank(message = "CPF é obrigatório")
+	@Size(min = 11, max = 11, message = "Escreva seu cpf sem pontos ou traços. Máximo 11 caracteres.")
 	@Column(nullable = false)
-	// @CPF
+	@CPF
 	private String cpf;
-	@ColumnDefault("false")
-	private Boolean administrador;
+	
+	@ColumnDefault(value = "false")
+	private Boolean administrador = false;
 
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
 	private Set<Pruu> pruus;
