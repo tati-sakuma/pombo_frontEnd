@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.senac.projeto_pombo.model.entity.Pruu;
@@ -14,10 +13,10 @@ import br.senac.projeto_pombo.model.entity.Pruu;
 @Repository
 public interface PruuRepository extends JpaRepository<Pruu, String>, JpaSpecificationExecutor<Pruu> {
 
-	@Query("SELECT p FROM Pruu p WHERE p.usuario.id = :idUsuario ORDER BY p.dataHora DESC")
+	@Query("SELECT p FROM Pruu p WHERE p.usuario.id = :idUsuario ORDER BY p.dataHoraPostagem DESC")
 	public List<Pruu> findbyIdUsuario(Integer idUsuario);
 	
-	@Query("SELECT p FROM Pruu p ORDER BY p.dataHora DESC")
+	@Query("SELECT p FROM Pruu p ORDER BY p.dataHoraPostagem DESC")
     public List<Pruu> findAllOrderedByDataHora();
 	
 }

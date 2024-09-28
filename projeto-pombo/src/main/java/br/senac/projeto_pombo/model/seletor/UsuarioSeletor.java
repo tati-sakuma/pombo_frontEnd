@@ -31,16 +31,15 @@ public class UsuarioSeletor extends BaseSeletor implements Specification<Usuario
 	public Predicate toPredicate(Root<Usuario> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> condicoes = new ArrayList<>();
 		
-		//condição para filtrar nome, verificação se está branco ou nulo feito pelo temFiltro
-		if(this.getNome().trim().length() > 0) {
+		if(this.getNome() != null && !this.getNome().trim().isEmpty()) {
 			condicoes.add(cb.like(root.get("nome"), "%" + this.getNome() + "%"));
 		}
 		
-		if(this.getEmail().trim().length() > 0) {
+		if(this.getEmail() != null && this.getEmail().trim().length() > 0) {
 			condicoes.add(cb.like(root.get("email"), "%" + this.getEmail() + "%"));
 		}
 		
-		if(this.getCpf().trim().length() > 0) {
+		if(this.getCpf() != null && this.getCpf().trim().length() > 0) {
 			condicoes.add(cb.like(root.get("cpf"), "%" + this.getCpf() + "%"));
 		}
 		

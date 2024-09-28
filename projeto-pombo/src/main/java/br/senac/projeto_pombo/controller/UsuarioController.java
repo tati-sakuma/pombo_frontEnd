@@ -2,7 +2,6 @@ package br.senac.projeto_pombo.controller;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.entity.Usuario;
+import br.senac.projeto_pombo.model.seletor.UsuarioSeletor;
 import br.senac.projeto_pombo.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,6 +43,12 @@ public class UsuarioController {
 		return service.pesquisarId(id);
 	}
 
+	
+	@PostMapping(path = "/filtro")
+	public List<Usuario> pesquisarComFiltros(@RequestBody UsuarioSeletor seletor) {
+		return service.pesquisarComFiltros(seletor);
+	}
+	
 	@Operation(summary = "Salvar novo usuário", description = "Adiciona novo usuário", responses = {
 			@ApiResponse(responseCode = "200", description = "Usuário salvo com sucesso!"), })
 	@PostMapping

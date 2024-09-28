@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.senac.projeto_pombo.exception.PomboException;
@@ -15,6 +16,7 @@ import br.senac.projeto_pombo.model.entity.Usuario;
 import br.senac.projeto_pombo.model.repository.CurtidaRepository;
 import br.senac.projeto_pombo.model.repository.PruuRepository;
 import br.senac.projeto_pombo.model.repository.UsuarioRepository;
+import br.senac.projeto_pombo.model.seletor.PruuSeletor;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -41,6 +43,18 @@ public class PruuService {
 		return repository.findbyIdUsuario(idUsuario);
 	}
 
+	public List<Pruu> pesquisarComFiltros(PruuSeletor pruuSeletor) {
+		if(pruuSeletor.temFiltro() && pruuSeletor.temPaginacao()) {
+			int pageNumber = pruuSeletor.getPagina();
+			int pageSize = pruuSeletor.getLimite();
+			
+			PageRequest pagina = PageRequest.of(pageNumber - 1, pageSize);
+			return repository.findAll(pruuSeletor, pagina).toList();
+		}
+		
+		return repository.findAll(pruuSeletor);
+	}
+	
 	public Pruu salvar(Pruu mensagem) {
 		return repository.save(mensagem);
 	}

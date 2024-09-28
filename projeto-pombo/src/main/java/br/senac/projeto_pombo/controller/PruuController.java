@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.entity.Pruu;
+import br.senac.projeto_pombo.model.seletor.PruuSeletor;
 import br.senac.projeto_pombo.service.PruuService;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -42,6 +43,11 @@ public class PruuController {
 	@GetMapping(path = "/idusuario/{idUsuario}")
 	public List<Pruu> pesquisarPorIdUsuario(@PathVariable Integer idUsuario) {
 		return service.pesquisarPorIdUsuario(idUsuario);
+	}
+	
+	@PostMapping(path = "/filtro")
+	public List<Pruu> pesquisarComFiltros(@RequestBody PruuSeletor seletor) {
+		return service.pesquisarComFiltros(seletor);
 	}
 
 	@Operation(summary = "Salva nova mensagem")

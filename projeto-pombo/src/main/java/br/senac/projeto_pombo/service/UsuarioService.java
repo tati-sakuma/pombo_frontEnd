@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.senac.projeto_pombo.exception.PomboException;
@@ -13,6 +14,7 @@ import br.senac.projeto_pombo.model.entity.Usuario;
 import br.senac.projeto_pombo.model.repository.CurtidaRepository;
 import br.senac.projeto_pombo.model.repository.PruuRepository;
 import br.senac.projeto_pombo.model.repository.UsuarioRepository;
+import br.senac.projeto_pombo.model.seletor.UsuarioSeletor;
 
 @Service
 public class UsuarioService {
@@ -34,13 +36,22 @@ public class UsuarioService {
 		return repository.findById(id).get();
 	}
 
-	public Usuario salvar(Usuario usuario) throws PomboException {
-		if(repository.cpfExiste(usuario.getCpf())) {
-			throw new PomboException("CPF já cadastrado. Efetue o login.");
+	public List<Usuario> pesquisarComFiltros(UsuarioSeletor usuarioSeletor) {
+		if(usuarioSeletor.temFiltro() && usuarioSeletor.temPaginacao()) {
+			int pageNumber = usuarioSeletor.getPagina();
+			int pageSize = usuarioSeletor.getLimite();
+			
+			PageRequest pagina = PageRequest.of(pageNumber - 1, pageSize);
+			return repository.findAll(usuarioSeletor, pagina).toList();
 		}
 		
-		
-		
+		return repository.findAll(usuarioSeletor);
+	}
+
+	public Usuario salvar(Usuario usuario) throws PomboException {
+		if (repository.cpfExiste(usuario.getCpf())) {
+			throw new PomboException("CPF já cadastrado. Efetue o login.");
+		}
 		return repository.save(usuario);
 	}
 
@@ -52,26 +63,27 @@ public class UsuarioService {
 	}
 
 	public void excluir(Integer id) throws PomboException {
-		if(repository.verificarSePossuiPruu(id)) {
+		if (repository.verificarSePossuiPruu(id)) {
 			throw new PomboException("Não é possível remover usuário que já criou uma postagem.");
 		}
 		repository.deleteById(id);
 	}
-	
+
 	public Set<String> pruusDoUsuario(Integer idUsuario) {
 		List<Pruu> pruus = pruuRepository.findbyIdUsuario(idUsuario);
 		Set<String> pruusDoUsuario = new LinkedHashSet<String>();
-		
-		for(Pruu pruu : pruus) {
+
+		for (Pruu pruu : pruus) {
 			pruusDoUsuario.add(pruu.getMensagem());
 		}
-		
+
 		return pruusDoUsuario;
 	}
 
 	public void bloquearPruu(Integer idUsuario, String idPruu) throws PomboException {
 		Pruu pruu = pruuRepository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não localizado!"));
-		Usuario usuario = repository.findById(idUsuario).orElseThrow(() -> new PomboException("Usuário não localizado!"));
+		Usuario usuario = repository.findById(idUsuario)
+				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
 		if (usuario.getAdministrador()) {
 			pruu.setBloqueado(true);

@@ -1,5 +1,12 @@
 package br.senac.projeto_pombo.model.seletor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.Data;
 
 @Data
@@ -20,4 +27,15 @@ public abstract class BaseSeletor {
 		return texto != null && !texto.isBlank();
 	}
 
+	public static void aplicarFiltroPeriodo(Root<?> root, CriteriaBuilder cb, List<Predicate> predicates,
+			LocalDate dataInicial, LocalDate dataFinal, String string) {
+		
+		if (dataInicial != null && dataFinal != null) {
+			predicates.add(cb.between(root.get(string), dataInicial, dataFinal));
+		} else if (dataInicial != null) {
+			predicates.add(cb.greaterThanOrEqualTo(root.get(string), dataInicial));
+		} else if (dataFinal != null) {
+			predicates.add(cb.lessThanOrEqualTo(root.get(string), dataFinal));
+		}
+	}
 }
