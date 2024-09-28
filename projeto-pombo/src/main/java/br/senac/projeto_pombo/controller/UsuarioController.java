@@ -46,7 +46,7 @@ public class UsuarioController {
 	@Operation(summary = "Salvar novo usuário", description = "Adiciona novo usuário", responses = {
 			@ApiResponse(responseCode = "200", description = "Usuário salvo com sucesso!"), })
 	@PostMapping
-	public Usuario salvar(@RequestBody Usuario usuario) {
+	public Usuario salvar(@RequestBody Usuario usuario) throws PomboException {
 		return service.salvar(usuario);
 	}
 

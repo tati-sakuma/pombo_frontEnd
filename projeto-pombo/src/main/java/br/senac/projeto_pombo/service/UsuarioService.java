@@ -34,7 +34,13 @@ public class UsuarioService {
 		return repository.findById(id).get();
 	}
 
-	public Usuario salvar(Usuario usuario) {
+	public Usuario salvar(Usuario usuario) throws PomboException {
+		if(repository.cpfExiste(usuario.getCpf())) {
+			throw new PomboException("CPF já cadastrado. Efetue o login.");
+		}
+		
+		
+		
 		return repository.save(usuario);
 	}
 
@@ -46,6 +52,7 @@ public class UsuarioService {
 	}
 
 	public void excluir(Integer id) {
+		
 		repository.deleteById(id);
 	}
 	
