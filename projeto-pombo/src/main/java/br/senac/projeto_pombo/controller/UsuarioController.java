@@ -60,7 +60,7 @@ public class UsuarioController {
 	@Operation(summary = "Exclui usuário com base no id", description = "Remove o usuário indicado pelo ID enviado.", responses = {
 			@ApiResponse(responseCode = "200", description = "Usuário removido com sucesso!"), })
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluirId(@PathVariable Integer id) {
+	public ResponseEntity<Void> excluirId(@PathVariable Integer id) throws PomboException {
 		service.excluir(id);
 		return ResponseEntity.noContent().build();
 	}

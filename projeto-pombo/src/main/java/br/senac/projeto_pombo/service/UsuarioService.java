@@ -51,8 +51,10 @@ public class UsuarioService {
 		return repository.save(usuario);
 	}
 
-	public void excluir(Integer id) {
-		
+	public void excluir(Integer id) throws PomboException {
+		if(repository.verificarSePossuiPruu(id)) {
+			throw new PomboException("Não é possível remover usuário que já criou uma postagem.");
+		}
 		repository.deleteById(id);
 	}
 	
