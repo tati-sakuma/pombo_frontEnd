@@ -31,8 +31,8 @@ public class PruuService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public List<Pruu> pesquisarTodos() {
-		return repository.findAllOrderedByDataHora();
+	public List<Pruu> pesquisarTodosAtivos() {
+		return repository.findAtivos();
 	}
 
 	public Pruu pesquisarId(String id) {
@@ -44,17 +44,17 @@ public class PruuService {
 	}
 
 	public List<Pruu> pesquisarComFiltros(PruuSeletor pruuSeletor) {
-		if(pruuSeletor.temFiltro() && pruuSeletor.temPaginacao()) {
+		if (pruuSeletor.temFiltro() && pruuSeletor.temPaginacao()) {
 			int pageNumber = pruuSeletor.getPagina();
 			int pageSize = pruuSeletor.getLimite();
-			
+
 			PageRequest pagina = PageRequest.of(pageNumber - 1, pageSize);
 			return repository.findAll(pruuSeletor, pagina).toList();
 		}
-		
+
 		return repository.findAll(pruuSeletor);
 	}
-	
+
 	public Pruu salvar(Pruu mensagem) {
 		return repository.save(mensagem);
 	}
@@ -66,8 +66,11 @@ public class PruuService {
 		return repository.save(mensagem);
 	}
 
-	public void excluir(String id) {
-		repository.deleteById(id);
+	public void excluir(String id) throws PomboException {
+		Pruu pruu = repository.findById(id).orElseThrow(() -> new PomboException("Pruu não encontrado!"));
+
+		pruu.setExcluido(true);
+		repository.save(pruu);
 	}
 
 	@Transactional
@@ -77,12 +80,12 @@ public class PruuService {
 				.orElseThrow(() -> new PomboException("Usuário não localizado!"));
 
 		CurtidaPk id = new CurtidaPk(idUsuario, idPruu);
-		
+
 		if (curtidaRepository.existsById(id)) {
-			
-			curtidaRepository.deleteById(id); 
-	        pruu.setCurtidas(pruu.getCurtidas() - 1);
-			
+
+			curtidaRepository.deleteById(id);
+			pruu.setCurtidas(pruu.getCurtidas() - 1);
+
 		} else {
 
 			Curtida curtida = new Curtida();
@@ -93,7 +96,7 @@ public class PruuService {
 			curtidaRepository.save(curtida);
 			pruu.setCurtidas(pruu.getCurtidas() + 1);
 		}
-		
+
 		repository.save(pruu);
 	}
 

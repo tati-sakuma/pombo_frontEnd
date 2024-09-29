@@ -27,10 +27,10 @@ public class PruuController {
 	@Autowired
 	private PruuService service;
 
-	@Operation(summary = "Lista todas as mensagens")
+	@Operation(summary = "Lista todas as mensagens não excluídas")
 	@GetMapping
-	public List<Pruu> pesquisarTodos() {
-		return service.pesquisarTodos();
+	public List<Pruu> pesquisarTodosAtivos() {
+		return service.pesquisarTodosAtivos();
 	}
 
 	@Operation(summary = "Pesquisa mensagem pelo ID")
@@ -63,9 +63,9 @@ public class PruuController {
 		return service.atualizar(mensagem);
 	}
 
-	@Operation(summary = "Exclui mensagem")
+	@Operation(summary = "Exclusão lógica da mensagem")
 	@DeleteMapping("/excluir/{id}")
-	public void excluir(@PathVariable String id) {
+	public void excluir(@PathVariable String id) throws PomboException {
 		service.excluir(id);
 	}
 

@@ -19,4 +19,6 @@ public interface PruuRepository extends JpaRepository<Pruu, String>, JpaSpecific
 	@Query("SELECT p FROM Pruu p ORDER BY p.dataHoraPostagem DESC")
     public List<Pruu> findAllOrderedByDataHora();
 	
+	@Query("SELECT p FROM Pruu p WHERE p.excluido = false ORDER BY p.dataHoraPostagem DESC")
+    List<Pruu> findAtivos();
 }

@@ -38,6 +38,9 @@ public class Pruu {
 
 	@ColumnDefault("false")
 	private Boolean bloqueado = false;
+	
+	@ColumnDefault("false")
+    private Boolean excluido = false;
 
 	@ManyToOne
 	@JoinColumn(name = "id_usuario", nullable = false)
