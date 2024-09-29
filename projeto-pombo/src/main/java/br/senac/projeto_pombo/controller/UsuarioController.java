@@ -43,7 +43,7 @@ public class UsuarioController {
 		return service.pesquisarId(id);
 	}
 
-	
+	@Operation(summary = "Pesquisa com filtros")
 	@PostMapping(path = "/filtro")
 	public List<Usuario> pesquisarComFiltros(@RequestBody UsuarioSeletor seletor) {
 		return service.pesquisarComFiltros(seletor);

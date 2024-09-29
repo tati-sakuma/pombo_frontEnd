@@ -1,7 +1,6 @@
 package br.senac.projeto_pombo.model.seletor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -18,7 +17,7 @@ public abstract class BaseSeletor {
 		this.limite = 0;
 		this.pagina = 0;
 	}
-
+ 
 	public boolean temPaginacao() {
 		return this.limite > 0 && this.pagina > 0;
 	}

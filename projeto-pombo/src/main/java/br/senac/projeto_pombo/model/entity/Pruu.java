@@ -29,10 +29,13 @@ public class Pruu {
 	@NotBlank(message = "Use sua criatividade! Digite algo!")
 	@Size(min = 1, max = 300)
 	private String mensagem;
+	
 	@CreationTimestamp
 	private LocalDateTime dataHoraPostagem;
+	
 	@ColumnDefault("0")
 	private Integer curtidas = 0;
+	
 	@ColumnDefault("0")
 	private Integer denuncias = 0;
 

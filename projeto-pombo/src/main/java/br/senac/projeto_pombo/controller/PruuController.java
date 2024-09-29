@@ -45,6 +45,7 @@ public class PruuController {
 		return service.pesquisarPorIdUsuario(idUsuario);
 	}
 	
+	@Operation(summary = "Pesquisa com filtros")
 	@PostMapping(path = "/filtro")
 	public List<Pruu> pesquisarComFiltros(@RequestBody PruuSeletor seletor) {
 		return service.pesquisarComFiltros(seletor);

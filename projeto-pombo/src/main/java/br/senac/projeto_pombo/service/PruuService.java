@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.senac.projeto_pombo.exception.PomboException;
+import br.senac.projeto_pombo.model.dto.RelatorioPruuDto;
 import br.senac.projeto_pombo.model.entity.Curtida;
 import br.senac.projeto_pombo.model.entity.CurtidaPk;
 import br.senac.projeto_pombo.model.entity.Pruu;
@@ -116,6 +117,25 @@ public class PruuService {
 		}
 
 		return usuariosQCurtiram;
+	}
+
+	public RelatorioPruuDto gerarRelatorioPruu(String idPruu) throws PomboException {
+		Pruu pruu = repository.findById(idPruu).orElseThrow(() -> new PomboException("Pruu não encontrado!"));
+
+		RelatorioPruuDto dto = new RelatorioPruuDto();
+
+		if (Boolean.TRUE.equals(pruu.getBloqueado())) {
+			dto.setMensagem("Bloqueado pelo administrador.");
+		} else {
+			dto.setMensagem(pruu.getMensagem());
+		}
+
+		dto.setQtdeCurtidas(pruu.getCurtidas());
+		dto.setNomeUsuarioCriacao(pruu.getUsuario().getNome());
+		dto.setIdUsuarioCriacao(pruu.getUsuario().getIdUsuario());
+		dto.setQtdeDenuncias(pruu.getDenuncias());
+
+		return dto;
 	}
 
 }
