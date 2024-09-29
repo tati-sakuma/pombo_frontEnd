@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.senac.projeto_pombo.exception.PomboException;
+import br.senac.projeto_pombo.model.dto.RelatorioPruuDto;
 import br.senac.projeto_pombo.model.entity.Pruu;
 import br.senac.projeto_pombo.model.seletor.PruuSeletor;
 import br.senac.projeto_pombo.service.PruuService;
@@ -44,7 +46,7 @@ public class PruuController {
 	public List<Pruu> pesquisarPorIdUsuario(@PathVariable Integer idUsuario) {
 		return service.pesquisarPorIdUsuario(idUsuario);
 	}
-	
+
 	@Operation(summary = "Pesquisa com filtros")
 	@PostMapping(path = "/filtro")
 	public List<Pruu> pesquisarComFiltros(@RequestBody PruuSeletor seletor) {
@@ -70,7 +72,7 @@ public class PruuController {
 		service.excluir(id);
 	}
 
-	@Operation(summary = "Joga uma pipoca pro pombo")
+	@Operation(summary = "Curte um pruu")
 	@PostMapping("/curtida/{idPruu}")
 	public void novaCurtidaNoPruu(@PathVariable String idPruu, @RequestParam Integer idUsuario) throws PomboException {
 		service.novaCurtidaNoPruu(idPruu, idUsuario);
@@ -87,4 +89,10 @@ public class PruuController {
 	public Set<String> usuariosQueCurtiram(String idPruu) {
 		return service.usuariosQueCurtiram(idPruu);
 	}
+
+	@Operation(summary = "Relatório que apresenta o pruu, a quantidade de curtidas e denuncias, o nome do usuário e o seu id.")
+	 @GetMapping("/relatorio/{idPruu}")
+	    public RelatorioPruuDto getRelatorio(@PathVariable String idPruu) throws PomboException {
+	        return service.gerarRelatorioPruu(idPruu);
+	    }
 }

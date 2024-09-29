@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.senac.projeto_pombo.exception.PomboException;
+import br.senac.projeto_pombo.model.dto.RelatorioDenunciaDto;
 import br.senac.projeto_pombo.model.entity.Denuncia;
 import br.senac.projeto_pombo.model.entity.DenunciaPk;
 import br.senac.projeto_pombo.model.entity.Pruu;
@@ -16,6 +17,7 @@ import br.senac.projeto_pombo.model.repository.DenunciaRepository;
 import br.senac.projeto_pombo.model.repository.PruuRepository;
 import br.senac.projeto_pombo.model.repository.UsuarioRepository;
 import br.senac.projeto_pombo.model.seletor.DenunciaSeletor;
+import jakarta.transaction.Transactional;
 
 @Service
 public class DenunciaService {
@@ -77,12 +79,14 @@ public class DenunciaService {
 		return repository.save(denuncia);
 	}
 
+	@Transactional
 	public void excluirDenuncia(DenunciaPk idDenuncia) throws PomboException {
 		if (!repository.existsById(idDenuncia)) {
 			throw new PomboException("Denúncia não encontrada!");
 		}
 		Pruu pruu = pruuRepository.findById(idDenuncia.getIdPruu())
 				.orElseThrow(() -> new RuntimeException("Pruu não encontrado"));
+		
 		pruu.setDenuncias(pruu.getDenuncias() - 1);
 		pruuRepository.save(pruu);
 		repository.deleteById(idDenuncia);
@@ -99,5 +103,25 @@ public class DenunciaService {
 
 		return repository.findAll(denunciaSeletor);
 	}
+	
+	 public RelatorioDenunciaDto gerarRelatorioDenuncia(String idPruu) throws PomboException {
+	        List<Denuncia> denuncias = repository.findByIdPruu(idPruu);
+
+	        if (denuncias.isEmpty()) {
+	            throw new PomboException("Nenhuma denúncia encontrada para essa mensagem!");
+	        }
+
+	        RelatorioDenunciaDto dto = new RelatorioDenunciaDto();
+	        dto.setUuidMensagem(idPruu);
+	        dto.setQuantidadeDenuncias(denuncias.size());
+
+	        Integer pendentes = (int) denuncias.stream().filter(d -> d.getAnalisada().equals(false)).count();
+	        Integer analisadas = (int) denuncias.stream().filter(d -> d.getAnalisada().equals(true)).count();
+
+	        dto.setDenunciasPendentes(pendentes);
+	        dto.setDenunciasAnalisadas(analisadas);
+
+	        return dto;
+	    }
 
 }

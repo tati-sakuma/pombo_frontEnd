@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.senac.projeto_pombo.exception.PomboException;
+import br.senac.projeto_pombo.model.dto.RelatorioDenunciaDto;
 import br.senac.projeto_pombo.model.entity.Denuncia;
 import br.senac.projeto_pombo.model.entity.DenunciaPk;
 import br.senac.projeto_pombo.model.entity.enums.TiposDenuncia;
@@ -78,10 +79,17 @@ public class DenunciaController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
 	@Operation(summary = "Pesquisa com filtros")
 	@PostMapping(path = "/filtro")
 	public List<Denuncia> pesquisarComFiltros(@RequestBody DenunciaSeletor seletor) {
 		return service.pesquisarComFiltros(seletor);
 	}
 
+	@Operation(summary = "Relatório que apresenta o id do pruu denunciado, a quantidade de denuncias e a quantidade de denuncias analisadas ou não analisadas.")
+	@GetMapping("/relatorio/{idPruu}")
+    public ResponseEntity<RelatorioDenunciaDto> gerarRelatorioDenuncia(@PathVariable String idPruu) throws PomboException {
+		RelatorioDenunciaDto dto = service.gerarRelatorioDenuncia(idPruu);
+        return ResponseEntity.ok(dto);
+    }
 }

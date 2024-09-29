@@ -42,4 +42,5 @@ public class Denuncia {
 	
 	@ColumnDefault("false")
 	private Boolean analisada = false;
+	
 }
