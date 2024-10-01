@@ -85,7 +85,7 @@ public class DenunciaService {
 			throw new PomboException("Denúncia não encontrada!");
 		}
 		Pruu pruu = pruuRepository.findById(idDenuncia.getIdPruu())
-				.orElseThrow(() -> new RuntimeException("Pruu não encontrado"));
+				.orElseThrow(() -> new PomboException("Pruu não encontrado"));
 		
 		pruu.setDenuncias(pruu.getDenuncias() - 1);
 		pruuRepository.save(pruu);
