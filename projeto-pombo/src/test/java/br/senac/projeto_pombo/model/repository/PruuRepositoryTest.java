@@ -27,21 +27,26 @@ public class PruuRepositoryTest {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	private Usuario usuarioSalvo;
+
 
 	@BeforeEach
 	public void setUp() {
-		Usuario usuarioSalvo = usuarioRepository.saveAndFlush(this.criarUsuario());
+		usuarioSalvo = usuarioRepository.saveAndFlush(this.criarUsuario());
 
 		List<Pruu> pruus = new ArrayList<>();
 
 		Pruu pruu1 = new Pruu();
-		pruu1.setMensagem("Primeira mensagem de Pruu");
+		pruu1.setMensagem("Pruu 1");
 		pruu1.setUsuario(usuarioSalvo);
+		pruu1.setExcluido(false);
 		pruus.add(pruu1);
 
 		Pruu pruu2 = new Pruu();
-		pruu2.setMensagem("Segunda mensagem de Pruu");
+		pruu2.setMensagem("Pruu 2");
 		pruu2.setUsuario(usuarioSalvo);
+		pruu2.setExcluido(true);
 		pruus.add(pruu2);
 
 		pruuRepository.saveAll(pruus);
@@ -71,19 +76,7 @@ public class PruuRepositoryTest {
 
 	@Test
 	public void deveRetornarPruusPorIdUsuario() {
-
-		Usuario usuarioSalvo = usuarioRepository.saveAndFlush(this.criarUsuario());
-
-		Pruu pruu1 = new Pruu();
-		pruu1.setMensagem("Pruu 1");
-		pruu1.setUsuario(usuarioSalvo);
-		pruuRepository.saveAndFlush(pruu1);
-
-		Pruu pruu2 = new Pruu();
-		pruu2.setMensagem("Pruu 2");
-		pruu2.setUsuario(usuarioSalvo);
-		pruuRepository.saveAndFlush(pruu2);
-
+		
 		List<Pruu> pruus = pruuRepository.findbyIdUsuario(usuarioSalvo.getIdUsuario());
 
 		assertNotNull(pruus);
@@ -95,53 +88,23 @@ public class PruuRepositoryTest {
 	@Test
 	public void deveRetornarTodosOsPruusOrdenadosPorData() {
 
-		Usuario usuarioSalvo = usuarioRepository.saveAndFlush(this.criarUsuario());
 
-		Pruu pruu1 = new Pruu();
-		pruu1.setMensagem("Pruu 1");
-		pruu1.setUsuario(usuarioSalvo);
-		pruuRepository.saveAndFlush(pruu1);
-
-		Pruu pruu2 = new Pruu();
-		pruu2.setMensagem("Pruu 2");
-		pruu2.setUsuario(usuarioSalvo);
-		pruuRepository.saveAndFlush(pruu2);
-
-		// Executar a consulta
 		List<Pruu> pruus = pruuRepository.findAllOrderedByDataHora();
 
-		// Verificar se os Pruus foram recuperados corretamente
 		assertNotNull(pruus);
 		assertTrue(pruus.size() >= 2);
-		assertEquals("Pruu 2", pruus.get(0).getMensagem()); // O mais recente deve vir primeiro
+		assertEquals("Pruu 2", pruus.get(0).getMensagem()); 
 		assertEquals("Pruu 1", pruus.get(1).getMensagem());
 	}
 
 	@Test
 	public void deveRetornarApenasPruusAtivos() {
 
-		Usuario usuarioSalvo = usuarioRepository.saveAndFlush(this.criarUsuario());
-
-		// Criar e salvar Pruus (um ativo e outro excluído)
-		Pruu pruuAtivo = new Pruu();
-		pruuAtivo.setMensagem("Pruu Ativo");
-		pruuAtivo.setUsuario(usuarioSalvo);
-		pruuAtivo.setExcluido(false);
-		pruuRepository.saveAndFlush(pruuAtivo);
-
-		Pruu pruuExcluido = new Pruu();
-		pruuExcluido.setMensagem("Pruu Excluído");
-		pruuExcluido.setUsuario(usuarioSalvo);
-		pruuExcluido.setExcluido(true);
-		pruuRepository.saveAndFlush(pruuExcluido);
-
-		// Executar a consulta
 		List<Pruu> pruusAtivos = pruuRepository.findAtivos();
 
-		// Verificar se apenas o Pruu ativo foi retornado
 		assertNotNull(pruusAtivos);
 		assertFalse(pruusAtivos.isEmpty());
-		assertEquals("Pruu Ativo", pruusAtivos.get(0).getMensagem());
+		assertEquals("Pruu 1", pruusAtivos.get(0).getMensagem());
 		assertTrue(pruusAtivos.stream().noneMatch(p -> p.getExcluido()));
 	}
 
