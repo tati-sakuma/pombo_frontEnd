@@ -1,5 +1,7 @@
 package br.senac.projeto_pombo.model.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
 	
 	@Query("SELECT COUNT(p) > 0 FROM Pruu p WHERE p.usuario.id = :idUsuario")
     boolean verificarSePossuiPruu(@Param("idUsuario") Integer idUsuario);
+	
+	Optional<Usuario> findByCpf(String cpf);
 	
 }

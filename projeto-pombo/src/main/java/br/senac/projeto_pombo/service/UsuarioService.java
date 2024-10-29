@@ -6,6 +6,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.senac.projeto_pombo.exception.PomboException;
@@ -17,7 +20,7 @@ import br.senac.projeto_pombo.model.repository.UsuarioRepository;
 import br.senac.projeto_pombo.model.seletor.UsuarioSeletor;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService{
 
 	@Autowired
 	private UsuarioRepository repository;
@@ -36,15 +39,23 @@ public class UsuarioService {
 		return repository.findById(id).get();
 	}
 
+	@Override
+	public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
+		return repository.findByCpf(cpf)
+				.orElseThrow(
+						() -> new UsernameNotFoundException("Usuário não encontrado" + cpf)
+						);
+	}
+
 	public List<Usuario> pesquisarComFiltros(UsuarioSeletor usuarioSeletor) {
 		if(usuarioSeletor.temFiltro() && usuarioSeletor.temPaginacao()) {
 			int pageNumber = usuarioSeletor.getPagina();
 			int pageSize = usuarioSeletor.getLimite();
-			
+
 			PageRequest pagina = PageRequest.of(pageNumber - 1, pageSize);
 			return repository.findAll(usuarioSeletor, pagina).toList();
 		}
-		
+
 		return repository.findAll(usuarioSeletor);
 	}
 
