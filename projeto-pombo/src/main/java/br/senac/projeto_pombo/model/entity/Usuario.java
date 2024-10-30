@@ -55,8 +55,7 @@ public class Usuario implements UserDetails {
 	private String cpf;
 	
 	@NotBlank(message = "Senha é obrigatória")
-	@Size(min = 5, max = 11, message = "Mínimo 5, máximo 11 caracteres.")
-	@Column(nullable = false)
+	@Column(nullable = false, length = 4000)
 	private String senha;
 	
 	@ColumnDefault(value = "false")
