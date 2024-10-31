@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.entity.Pruu;
@@ -18,6 +19,7 @@ import br.senac.projeto_pombo.model.repository.CurtidaRepository;
 import br.senac.projeto_pombo.model.repository.PruuRepository;
 import br.senac.projeto_pombo.model.repository.UsuarioRepository;
 import br.senac.projeto_pombo.model.seletor.UsuarioSeletor;
+
 
 @Service
 public class UsuarioService implements UserDetailsService{
@@ -30,6 +32,9 @@ public class UsuarioService implements UserDetailsService{
 
 	@Autowired
 	private CurtidaRepository curtidaRepository;
+	
+	@Autowired
+	private imagemService imagemService;
 
 	public List<Usuario> pesquisarTodos() {
 		return repository.findAll();
@@ -115,5 +120,18 @@ public class UsuarioService implements UserDetailsService{
 		}
 
 		return pruusCurtidos;
+	}
+	
+public void salvarImagemPerfil(MultipartFile imagem, Integer idUsuario) throws PomboException {
+		
+		Usuario usuarioComNovaImagem = repository
+										.findById(idUsuario)
+										.orElseThrow(() -> new PomboException("Carta não encontrada"));
+		
+		String imagemBase64 = imagemService.processarImagem(imagem);
+		
+		usuarioComNovaImagem.setImagemEmBase64(imagemBase64);
+		
+		repository.save(usuarioComNovaImagem);
 	}
 }

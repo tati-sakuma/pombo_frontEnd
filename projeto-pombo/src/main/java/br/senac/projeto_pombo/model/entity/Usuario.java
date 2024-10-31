@@ -50,7 +50,7 @@ public class Usuario implements UserDetails {
 	
 	@NotBlank(message = "CPF é obrigatório")
 	@Size(min = 11, max = 11, message = "Escreva seu cpf sem pontos ou traços. Máximo 11 caracteres.")
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	@CPF
 	private String cpf;
 	
@@ -60,6 +60,9 @@ public class Usuario implements UserDetails {
 	
 	@ColumnDefault(value = "false")
 	private Boolean administrador = false;
+	
+	@Column(columnDefinition = "LONGTEXT")
+	private String imagemEmBase64;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "usuario")
