@@ -15,7 +15,8 @@ import br.senac.projeto_pombo.model.entity.Usuario;
 @Service
 public class JwtService {
 	 private final JwtEncoder jwtEncoder;
-	 long dezHorasEmSegundos = 36000L;
+	 long doisMinutosEmMilisSegundos = 120000L;
+	 
 
 	    public JwtService(JwtEncoder jwtEncoder) {
 	        this.jwtEncoder = jwtEncoder;
@@ -30,7 +31,7 @@ public class JwtService {
 	        JwtClaimsSet claims = JwtClaimsSet.builder()
 	        		.issuer(roles)
 	        		.issuedAt(now)
-	        		.expiresAt(now.plusSeconds(dezHorasEmSegundos))
+	        		.expiresAt(now.plusSeconds(doisMinutosEmMilisSegundos))
 	        		.subject(authentication.getName())
 	        		.claim("roles", roles)
 	        		.claim("idUsuario", usuarioAutenticado.getIdUsuario())

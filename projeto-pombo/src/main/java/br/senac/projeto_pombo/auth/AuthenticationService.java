@@ -45,4 +45,8 @@ public class AuthenticationService {
 
 		return usuarioAutenticado;
 	}
+	
+	public void logout() {
+		SecurityContextHolder.clearContext();
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import br.senac.projeto_pombo.auth.RSAPasswordEncoder;
 import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.dto.RelatorioPruuDto;
 import br.senac.projeto_pombo.model.entity.Curtida;
@@ -31,6 +32,9 @@ public class PruuService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private RSAPasswordEncoder RSAencoder;
 
 	public List<Pruu> pesquisarTodosAtivos() {
 		return repository.findAtivos();
@@ -57,6 +61,7 @@ public class PruuService {
 	}
 
 	public Pruu salvar(Pruu mensagem) {
+		mensagem.setMensagem(RSAencoder.encode(mensagem.getMensagem()));
 		return repository.save(mensagem);
 	}
 

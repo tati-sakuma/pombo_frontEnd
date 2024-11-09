@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.senac.projeto_pombo.auth.RSAPasswordEncoder;
 import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.entity.Pruu;
 import br.senac.projeto_pombo.model.entity.Usuario;
@@ -35,6 +36,9 @@ public class UsuarioService implements UserDetailsService{
 	
 	@Autowired
 	private imagemService imagemService;
+	
+	@Autowired
+	private RSAPasswordEncoder RSAencoder;
 
 	public List<Usuario> pesquisarTodos() {
 		return repository.findAll();
@@ -68,6 +72,9 @@ public class UsuarioService implements UserDetailsService{
 		if (repository.cpfExiste(usuario.getCpf())) {
 			throw new PomboException("CPF já cadastrado. Efetue o login.");
 		}
+		
+		usuario.setSenha(RSAencoder.encode(usuario.getSenha()));
+		
 		return repository.save(usuario);
 	}
 
@@ -126,7 +133,7 @@ public void salvarImagemPerfil(MultipartFile imagem, Integer idUsuario) throws P
 		
 		Usuario usuarioComNovaImagem = repository
 										.findById(idUsuario)
-										.orElseThrow(() -> new PomboException("Carta não encontrada"));
+										.orElseThrow(() -> new PomboException("Usuário não encontrado"));
 		
 		String imagemBase64 = imagemService.processarImagem(imagem);
 		

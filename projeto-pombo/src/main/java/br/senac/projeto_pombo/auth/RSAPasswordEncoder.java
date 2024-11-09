@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class RSAPasswordEncoder implements PasswordEncoder {
 
-
     private final PublicKey publicKey;
     private final PrivateKey privateKey;
 
@@ -21,9 +20,9 @@ public class RSAPasswordEncoder implements PasswordEncoder {
     }
 
     @Override
-    public String encode(CharSequence rawPassword) {
+    public String encode(CharSequence rawText) {
         try {
-            byte[] passwordBytes = rawPassword.toString().getBytes(StandardCharsets.UTF_8);
+            byte[] passwordBytes = rawText.toString().getBytes(StandardCharsets.UTF_8);
 
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -31,23 +30,23 @@ public class RSAPasswordEncoder implements PasswordEncoder {
 
             return Base64.getEncoder().encodeToString(encryptedBytes);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao criptografar a senha com RSA", e);
+            throw new RuntimeException("Erro ao criptografar com RSA", e);
         }
     }
 
     @Override
-    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+    public boolean matches(CharSequence rawText, String encodedText) {
         try {
-            byte[] encryptedBytes = Base64.getDecoder().decode(encodedPassword);
+            byte[] encryptedBytes = Base64.getDecoder().decode(encodedText);
 
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
 
             String decryptedPassword = new String(decryptedBytes, StandardCharsets.UTF_8);
-            return rawPassword.toString().equals(decryptedPassword);
+            return rawText.toString().equals(decryptedPassword);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao decifrar a senha com RSA", e);
+            throw new RuntimeException("Erro ao decifrar com RSA", e);
         }
     }
 

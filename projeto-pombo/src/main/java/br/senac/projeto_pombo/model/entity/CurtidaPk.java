@@ -14,6 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CurtidaPk implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 590082665397101041L;
+
 	@Column(name = "id_usuario")
 	Integer idUsuario;
 	

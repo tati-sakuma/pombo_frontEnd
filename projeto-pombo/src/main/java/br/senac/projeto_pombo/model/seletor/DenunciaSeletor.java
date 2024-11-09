@@ -12,10 +12,16 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class DenunciaSeletor extends BaseSeletor implements Specification<Denuncia> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8083229553486217811L;
 	private String idPruu;
 	private Integer idUsuario;
 	private LocalDate dataInicial;

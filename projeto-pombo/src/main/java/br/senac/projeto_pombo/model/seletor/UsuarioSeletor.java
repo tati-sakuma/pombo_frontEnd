@@ -5,17 +5,22 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import br.senac.projeto_pombo.exception.PomboException;
 import br.senac.projeto_pombo.model.entity.Usuario;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class UsuarioSeletor extends BaseSeletor implements Specification<Usuario> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 532804053798933095L;
 	private String nome;
 	private String email;
 	private String cpf;

@@ -72,7 +72,7 @@ public class Usuario implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-		list.add(new SimpleGrantedAuthority(administrador.toString()));
+		list.add(new SimpleGrantedAuthority(administrador ? "ADMINISTRADOR" : "USUARIO"));
 		
 		return list;
 	}

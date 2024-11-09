@@ -41,9 +41,9 @@ public class AuthenticationController {
 		return authenticationService.authenticate(authentication);
 	}
 
-	@PostMapping("/novo-usuario")
+	@PostMapping("/novo")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void registrarJogador(@RequestBody Usuario novoUsuario) throws PomboException {
+	public void registrarUsuario(@RequestBody Usuario novoUsuario) throws PomboException {
 
 		String senhaCifrada = passwordEncoder.encode(novoUsuario.getSenha());
 

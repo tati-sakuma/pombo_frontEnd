@@ -22,7 +22,7 @@ import br.senac.projeto_pombo.service.PruuService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping(path = "/api/pruu")
+@RequestMapping(path = "/api/restrito/pruu")
 public class PruuController {
 
 	@Autowired

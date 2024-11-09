@@ -12,10 +12,16 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PruuSeletor extends BaseSeletor implements Specification<Pruu> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7977018217724759L;
 	private String mensagem;	
 	private String nomeUsuario;
 	private LocalDate dataInicial;
