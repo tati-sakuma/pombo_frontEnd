@@ -84,6 +84,7 @@ public class UsuarioController {
 
 	
 	
+	
 	@Operation(summary = "Pesquisa um usuário com base no seu id", description = "Retorna o usuário indicado pelo id.", responses = {
 			@ApiResponse(responseCode = "200", description = "Usuário retornado com sucesso!") })
 	@GetMapping(path = "/{id}")
