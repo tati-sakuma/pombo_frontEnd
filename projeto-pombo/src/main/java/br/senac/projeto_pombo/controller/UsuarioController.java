@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.annotation.MultipartConfig;
 
 @RestController
-@RequestMapping(path = "/api/restrito/pombo")
+@RequestMapping(path = "/api/restrito/usuario")
 @MultipartConfig(fileSizeThreshold = 10485760)
 public class UsuarioController {
 
