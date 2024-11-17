@@ -9,12 +9,9 @@ import { Usuario } from '../model/usuario';
 export class UsuarioService {
 
 
-  private readonly API: 'http://localhost:4200/usuario/api/restrito/usuario';
+  private readonly API: 'http://localhost:8080/api/restrito/usuario';
 
-  constructor(
-    private httpClient: HttpClient,
-
-  ) { }
+  constructor(private httpClient: HttpClient) { }
 
   public pesquisarTodos(): Observable<Array<Usuario>> {
     return this.httpClient.get<Array<Usuario>>(this.API);

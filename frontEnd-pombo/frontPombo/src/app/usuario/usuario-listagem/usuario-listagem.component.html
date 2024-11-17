@@ -1,1 +1,20 @@
-<p>usuario-listagem works!</p>
+<pre>{{usuarios | json}}</pre>
+
+<div>
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr scope="row" *ngFor="let usuario of usuarios">
+              <td>{{ usuario.idUsuario }}</td>
+              <td>{{ usuario.nome }}</td>
+              <td>{{ usuario.email }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>

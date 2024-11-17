@@ -20,17 +20,18 @@ export class UsuarioListagemComponent implements OnInit {
   }
 
   private pesquisarTodosUsuarios () {
-    this.usuarioService.pesquisarTodos().subscribe(
-      resultado => {
+    this.usuarioService.pesquisarTodos().subscribe({
+
+      next: resultado => {
         this.usuarios = resultado;
       },
-      erro => {
+      error: erro => {
         Swal.fire({
           icon: 'error',
           title: 'Erro ao listar todos usuários.',
           text: 'Erro ao listar todos usuários.' + erro.error.mensagem,
         });
       }
-    )
+  })
   }
 }
