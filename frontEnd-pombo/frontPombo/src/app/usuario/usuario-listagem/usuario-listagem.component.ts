@@ -15,23 +15,22 @@ export class UsuarioListagemComponent implements OnInit {
   constructor(private usuarioService: UsuarioService){}
 
   ngOnInit(): void {
-
+    this.pesquisarTodosUsuarios();
 
   }
 
   private pesquisarTodosUsuarios () {
-    this.usuarioService.pesquisarTodos().subscribe({
-
-      next: resultado => {
+    this.usuarioService.pesquisarTodos().subscribe(
+      resultado => {
         this.usuarios = resultado;
       },
-      error: erro => {
+    erro => {
         Swal.fire({
           icon: 'error',
           title: 'Erro ao listar todos usuários.',
-          text: 'Erro ao listar todos usuários.' + erro.error.mensagem,
+          text: 'Erro ao listar todos usuários.' 
         });
       }
-  })
+  )
   }
 }

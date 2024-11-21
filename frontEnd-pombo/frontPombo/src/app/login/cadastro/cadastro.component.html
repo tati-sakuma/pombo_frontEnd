@@ -1,86 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Usuário</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #F5F5F5; /* Fundo cinza claro */
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-    }
+<pre>{{usuario | json}}</pre>
 
-    .container {
-      background-color: #FFFFFF; /* Fundo branco */
-      border-radius: 10px; /* Bordas arredondadas */
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-      padding: 30px;
-      width: 100%;
-      max-width: 400px; /* Largura máxima */
-    }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .form-label {
-      font-weight: 500;
-    }
-
-    .btn-primary {
-      background-color: #375A7F;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .btn-primary:hover {
-      background-color: #2B4D6F;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Cadastro de Usuário</h1>
-    <form action="/cadastro" method="POST">
-      <!-- Nome -->
-      <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite seu nome" required>
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+  <div class="row text-center p-2 align-items-center justify-content-center" style="width: 60%;">
+    <div class="col col-md-6 pt-5">
+      <div class="card border-dark shadow rounded">
+        <!-- Cabeçalho -->
+        <div class="card-header custom-bg-primary">
+          <h3 class="text-center text-white pt-2">Cadastro de Usuário</h3>
+        </div>
+        <!-- Corpo -->
+        <div class="card-body">
+          <form action="/cadastro" method="POST">
+            <!-- Nome -->
+            <div class="mb-3">
+              <label for="nome" class="form-label text-start d-block">Nome</label>
+              <input type="text" id="nome" name="nome" class="form-control border-dark" placeholder="Digite seu nome" required [(ngModel)]="usuario.nome">
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label text-start d-block">E-mail</label>
+              <input type="email" id="email" name="email" class="form-control border-dark" placeholder="Digite seu e-mail" required [(ngModel)]="usuario.email">
+            </div>
+            <!-- CPF -->
+            <div class="mb-3">
+              <label for="cpf" class="form-label text-start d-block">CPF</label>
+              <input type="text" id="cpf" name="cpf" class="form-control border-dark" placeholder="Digite seu CPF" required pattern="\d{11}" title="Digite um CPF válido (apenas números)" [(ngModel)]="usuario.cpf">
+            </div>
+            <!-- Senha -->
+            <div class="mb-3">
+              <label for="senha" class="form-label text-start d-block">Senha</label>
+              <input type="password" id="senha" name="senha" class="form-control border-dark" placeholder="Digite sua senha" required minlength="6" [(ngModel)]="usuario.password">
+            </div>
+            <!-- Botões -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary w-100 mb-3" (click)="salvarNovoUsuario()">Cadastrar</button>
+            </div>
+            <div class="text-center">
+              <span>Já tem uma conta?
+                <a href="/login" class="text-primary">Faça login</a>
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
-
-      <!-- Email -->
-      <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
-      </div>
-
-      <!-- CPF -->
-      <div class="mb-3">
-        <label for="cpf" class="form-label">CPF</label>
-        <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Digite seu CPF" required pattern="\d{11}" title="Digite um CPF válido (apenas números)">
-      </div>
-
-      <!-- Senha -->
-      <div class="mb-3">
-        <label for="senha" class="form-label">Senha</label>
-        <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required minlength="6">
-      </div>
-
-      <!-- Botão de Enviar -->
-      <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
-    </form>
+    </div>
   </div>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>

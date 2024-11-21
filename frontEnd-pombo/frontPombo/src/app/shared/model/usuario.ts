@@ -1,24 +1,30 @@
-import { Curtida } from "./curtida";
+import { Denuncia } from "./denuncia";
+import { Role } from "./enum/role";
+import { Pruu } from "./pruu";
 
 export class Usuario {
-  idUsuario: number;
-  nome: string;
-  email: string;
-  cpf: string;
-  senha: string;
-  administrador: boolean;
-  imagemEmBase64: string;
-  pruusCurtidos: Curtida[];
+  id: number;
+  nome!: string;
+  email!: string;
+  cpf!: string;
+  foto?: string;
+  password!: string;
+  role: Role = Role.USER;
+  pruus: Pruu[] = [];
+  denuncias: Denuncia[] = [];
+  criadoEm?: Date;
+
+  constructor(init?: Partial<Usuario>) {
+    Object.assign(this, init);
+  }
 
   getAuthorities(): string[] {
-    return [this.administrador ? 'ADMINISTRADOR' : 'USUARIO'];
+    return [this.role]; // Retorna o papel do usuário como uma lista
   }
-
-  getPassword(): string {
-    return this.senha;
-  }
-
   getUsername(): string {
-    return this.cpf;
+    return this.email;
+  }
+  getPassword(): string {
+    return this.password;
   }
 }

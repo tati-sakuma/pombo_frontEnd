@@ -1,1 +1,106 @@
-<p>pruu-listagem works!</p>
+<pre>{{pruuSeletor | json}}</pre>
+
+<div class="container-fluid mt-5 " style="max-width: 1000px;">
+  <h3 class="mb-4 text-center custom-bg-primary">Feed do Pombo</h3>
+
+  <div class="card-body ">
+
+    <form class="">
+      <div class="row">
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="dataInicio">Data Início</label>
+            <input type="date" class="form-control" id="dataInicio" [(ngModel)]="pruuSeletor.dataInicioCriacao"
+              name="dataInicio" />
+          </div>
+
+          <div class="col-md-4">
+            <label for="dataFim">Data Fim</label>
+            <input type="date" class="form-control" id="dataFim" [(ngModel)]="pruuSeletor.dataFimCriacao"
+              name="dataFim" />
+          </div>
+
+          <div class="col-md-4">
+            <label for="pago">Curtido</label>
+            <select class="form-control" id="pago" [(ngModel)]="pruuSeletor.estaCurtido" name="pago">
+              <option [ngValue]="true">Sim</option>
+              <option [ngValue]="false">Não</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <input
+        type="text"
+        class="form-control"
+        placeholder="Digite as palavras a serem localizadas..."
+        aria-label="Pesquisa"
+        name="texto"
+        [(ngModel)]="pruuSeletor.texto"
+      />
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <label for="pesquisar">&nbsp;</label>
+            <button type="button" class="form-control btn btn-outline-dark" (click)="listarPruuComFiltros()">
+              <i class="bi bi-search"></i> Pesquisar
+            </button>
+          </div>
+
+          <div class="col-md-2">
+            <label for="limpar">&nbsp;</label>
+            <button type="button" class="form-control btn btn-outline-dark" (click)="limpar()">
+              <i class="bi bi-x-circle"></i> Limpar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+  <!-- Message 1 -->
+  <div class="message-container  mt-5">
+    <div class="message-header">
+      <div class="user-avatar"></div>
+      <div>
+        <span class="user-name">João Silva</span>
+        <br>
+        <span class="message-time">10 minutos atrás</span>
+      </div>
+    </div>
+    <p class="message-text">Hoje o céu está lindo e a praia está incrível. Venham conferir!</p>
+  </div>
+  <hr>
+
+  <!-- Message 1 -->
+  <div class="message-container">
+    <div class="message-header">
+      <div class="user-avatar"></div>
+      <div>
+        <span class="user-name">João Silva</span>
+        <br>
+        <span class="message-time">10 minutos atrás</span>
+      </div>
+    </div>
+    <p class="message-text">Hoje o céu está lindo e a praia está incrível. Venham conferir!</p>
+  </div>
+  <hr>
+
+
+  <div *ngFor="let pruu of pruus" class="message-container  mt-5">
+    <div class="message-header">
+      <div class="user-avatar"></div>
+      <div>
+        <span class="user-name">{{ pruu.usuario.nome }}</span>
+        <br>
+        <span class="message-time">{{ pruu.dataHoraCriacao| date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+    </div>
+    <p class="message-text">{{ pruu.texto }}</p>
+    <hr>
+  </div>
+</div>

@@ -1,15 +1,10 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { catchError, Observable, throwError } from "rxjs";
-import { LoginService } from "../shared/service/login.service";
+import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
+import { error } from "console";
+import { catchError, throwError } from "rxjs";
 
-@Injectable()
-export class RequestInterceptor implements HttpInterceptor {
-  
-  constructor(private loginService: LoginService, private router: Router) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  export const RequestInterceptor: HttpInterceptorFn = (req, next) => {
+
     const tokenUsuarioAutenticado = localStorage.getItem('tokenUsuarioAutenticado');
     let authReq = req;
 
@@ -19,14 +14,12 @@ export class RequestInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(authReq).pipe(
+    return next (authReq).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
-          this.loginService.sair();
-          this.router.navigate(['/login']);
+
         }
         return throwError(error);
       })
     );
   }
-}

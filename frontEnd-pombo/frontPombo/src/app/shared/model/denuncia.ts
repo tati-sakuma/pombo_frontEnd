@@ -1,4 +1,4 @@
-import { TiposDenuncia } from "./enum/tipos-denuncia";
+import { MotivoDenuncia } from "./enum/motivo.denuncia";
 import { Pruu } from "./pruu";
 import { Usuario } from "./usuario";
 
@@ -6,7 +6,7 @@ export class Denuncia {
   idDenuncia: string;
   usuario: Usuario;
   pruu: Pruu;
-  motivo: TiposDenuncia;
+  motivo: MotivoDenuncia;
   dataDenuncia: Date;
   analisada: boolean = false;
 }

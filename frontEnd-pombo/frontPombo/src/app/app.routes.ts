@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { CadastroModule } from './cadastro/cadastro.module';
 
 export const routes: Routes = [
   {
@@ -21,5 +20,10 @@ export const routes: Routes = [
     path: 'usuario',
     loadChildren: () =>
       import('./usuario/usuario.module').then((m) => m.UsuarioModule),
+  },
+
+  {
+    path: 'pruu',
+    loadChildren:() => import('./pruu/pruu.module').then(m => m.PruuModule)
   },
 ];

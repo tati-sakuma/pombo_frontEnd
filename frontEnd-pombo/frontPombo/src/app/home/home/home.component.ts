@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../shared/model/usuario';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-home',
@@ -11,38 +12,31 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit{
 
   public usuarioAutenticado: Usuario;
+  public ehAdministrador: boolean = false;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    //this.carregarUsuarioAutenticado();
+    let token = localStorage.getItem('tokenUsuarioAutenticado');
+
+    if(token){
+      let tokenJSON: any = jwtDecode(token);
+      this.ehAdministrador = tokenJSON?.roles == 'ADMINISTRADOR';
+
+      if(this.ehAdministrador){
+        this.router.navigate(['/home/cartas']);
+      }
+    } else {
+     this.router.navigate(['/login']);
+    }
   }
 
-  // carregarUsuarioAutenticado(): void {
-  //   if (typeof localStorage !== 'undefined') {
-  //     let usuarioNoStorage = localStorage.getItem('usuarioAutenticado');
-
-  //     if (usuarioNoStorage) {
-  //       this.usuarioAutenticado = JSON.parse(usuarioNoStorage);
-  //     } else {
-  //       this.router.navigate(['/login']);
-  //     }
-  //   } else {
-  //     console.error('localStorage não está disponível. Não é possível carregar o usuário autenticado');
-  //     this.router.navigate(['/login']);
-  //   }
-  // }
-
-  // logout(): void {
-  //   // Verifica se localStorage está disponível
-  //   if (typeof localStorage !== 'undefined') {
-  //     localStorage.removeItem('usuarioAutenticado');
-  //   } else {
-  //     console.error('localStorage is not available. Unable to remove authenticated user.');
-  //     // Lida com a ausência de localStorage de acordo com a sua lógica
-  //   }
-  //   this.router.navigate(['/login']);
-  // }
+  logout(){
+    localStorage.removeItem('tokenUsuarioAutenticado');
+    this.router.navigate(['/login']);
+  }
 }
+
 
 
 

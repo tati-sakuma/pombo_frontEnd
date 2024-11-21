@@ -1,7 +1,53 @@
-// Cor de fundo para toda a página
+// Variáveis de Cores
+$primary-color: #375A7F
+$primary-hover: #2B4D6F
+$secondary-color: #FFFFFF
+$text-color: #4A4A4A
+$background-color: #F5F5F5
+$alert-color: #F7B32B
+$danger-color: #FF4D4D
+
+// Estilos Globais
 body
-  background-color: #F5F5F5 // Cinza claro
-  color: #4A4A4A // Cor do texto para contraste
-  font-family: Arial, sans-serif
+  background-color: $background-color
+  color: $text-color
+  font-family: 'Arial', sans-serif
   margin: 0
   padding: 0
+
+// Centralização de Conteúdo
+.center-content
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 100vh
+
+// Container Padrão
+.container
+  background-color: $secondary-color
+  border-radius: 10px
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1)
+  padding: 40px
+  max-width: 600px
+  width: 100%
+
+// Botões Globais
+.btn
+  display: inline-block
+  padding: 10px 20px
+  font-size: 1rem
+  font-weight: bold
+  border-radius: 5px
+  text-align: center
+  cursor: pointer
+  transition: all 0.3s ease
+  &.btn-primary
+    background-color: $primary-color
+    color: $secondary-color
+    border: none
+    &:hover
+      background-color: $primary-hover
+
+.custom-bg-primary
+  background-color: $primary-color !important // Substitui o estilo Bootstrap
+  color: #FFFFFF // Certifique-se de manter o contraste para o texto
