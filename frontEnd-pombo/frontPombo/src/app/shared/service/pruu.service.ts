@@ -9,7 +9,7 @@ import { PruuSeletor } from '../model/seletor/pruu.seletor';
 })
 export class PruuService {
 
-  private readonly API = 'http://localhost:8080/api/pruus';
+  private readonly API = 'http://localhost:8080/pombo/api/pruus';
 
   constructor(private httpClient: HttpClient) { }
 

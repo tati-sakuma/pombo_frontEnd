@@ -25,13 +25,14 @@ export class PruuListagemComponent implements OnInit {
 
   public listarPruuComFiltros() {
     this.pruuService.listarComFiltros(this.pruuSeletor).subscribe({
-      next: (r) => {
-        this.pruus = r;
+      next: (resultado) => {
+        this.pruus = resultado;
       },
-      error: (e) => {
+      error: (erro) => {
+        let erroString = this.transformarErroEmString(erro.error);
         Swal.fire({
           title: 'Erro!',
-          text: 'Erro ao consultar todos os pruus: ' + e.error,
+          text: 'Erro ao consultar todos os pruus: ' + erroString,
           icon: 'error',
         });
       }
@@ -40,6 +41,18 @@ export class PruuListagemComponent implements OnInit {
 
   public limpar(): void {
     this.pruuSeletor = new PruuSeletor();
+  }
+
+
+
+
+  private transformarErroEmString(erro: any): string {
+    if (typeof erro === 'object') {
+      return Object.entries(erro)
+        .map(([key, value]) => value)
+        .join('; ');
+    }
+    return String(erro);
   }
 
 }

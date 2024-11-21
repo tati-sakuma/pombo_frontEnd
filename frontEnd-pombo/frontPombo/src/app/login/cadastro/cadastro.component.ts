@@ -34,12 +34,26 @@ export class CadastroComponent implements OnInit {
         });
       },
       error: (erro) => {
+
+        let erroString = this.transformarErroEmString(erro.error);
         Swal.fire({
           icon: 'error',
           title: 'Erro ao cadastrar novo usuário!',
-          text: 'Erro ao cadastrar novo usuário:' + erro.error,
+          text: 'Erro ao cadastrar novo usuário: ' + erroString,
         });
       },
     });
   }
+
+  private transformarErroEmString(erro: any): string {
+    if (typeof erro === 'object') {
+      return Object.entries(erro)
+        .map(([key, value]) => value)
+        .join('; ');
+    }
+    return String(erro);
+  }
+
+
+
 }

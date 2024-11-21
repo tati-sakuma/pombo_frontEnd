@@ -12,28 +12,30 @@ import { isPlatformBrowser } from '@angular/common';
 
 export class HomeComponent implements OnInit{
 
-  public usuarioAutenticado: Usuario;
+  public idUsuarioAutenticado: number;
   public ehAdministrador: boolean = false;
 
   constructor(private router: Router,
-    @Inject(PLATFORM_ID) private platformId: any
   ) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-    let token = localStorage.getItem('tokenUsuarioAutenticado');
+    let token;
+
+    if(localStorage){
+      token = localStorage.getItem('tokenUsuarioAutenticado');
+    }
 
     if(token){
       let tokenJSON: any = jwtDecode(token);
       this.ehAdministrador = tokenJSON?.roles == 'ADMIN';
 
       if(this.ehAdministrador){
-        this.router.navigate(['/pruu']);
+        this.router.navigate(['/home/cartas']);
       }
     } else {
      this.router.navigate(['/login']);
     }
-  }}
+  }
 
   logout(){
     localStorage.removeItem('tokenUsuarioAutenticado');
