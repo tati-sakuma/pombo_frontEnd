@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit{
 
     if(token){
       let tokenJSON: any = jwtDecode(token);
-      this.ehAdministrador = tokenJSON?.roles == 'ADMINISTRADOR';
+      this.ehAdministrador = tokenJSON?.roles == 'ADMIN';
 
       if(this.ehAdministrador){
         this.router.navigate(['/home/cartas']);

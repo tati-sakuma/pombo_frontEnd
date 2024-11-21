@@ -19,7 +19,7 @@ export class PruuListagemComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit(): void {
-    
+
   }
 
 
@@ -31,7 +31,7 @@ export class PruuListagemComponent implements OnInit {
       error: (e) => {
         Swal.fire({
           title: 'Erro!',
-          text: 'Erro ao consultar todos os pruus: ' + e.error.mensagem,
+          text: 'Erro ao consultar todos os pruus: ' + e.error,
           icon: 'error',
         });
       }

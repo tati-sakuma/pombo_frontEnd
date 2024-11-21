@@ -18,6 +18,8 @@ export class PruuService {
     return this.httpClient.post<Array<Pruu>>(this.API + "/filtros", pruuSeletor);
   }
 
-
+  public novoPruu(novoPruu: Pruu): Observable<Pruu> {
+    return this.httpClient.post<Pruu>(this.API, novoPruu);
+  }
 
 }

@@ -27,7 +27,7 @@ export class CadastroComponent implements OnInit {
     this.loginService.salvar(this.usuario).subscribe({
       next: (resultado) => {
         this.usuario = resultado;
-        Swal.fire('Cliente salvo com sucesso!').then((resultado) => {
+        Swal.fire('Usuário salvo com sucesso!').then((resultado) => {
           if (resultado.isConfirmed) {
             this.usuario = new Usuario();
           }
@@ -37,7 +37,7 @@ export class CadastroComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Erro ao cadastrar novo usuário!',
-          text: 'Erro ao cadastrar novo usuário:' + erro.error.mensagem,
+          text: 'Erro ao cadastrar novo usuário:' + erro.error,
         });
       },
     });
