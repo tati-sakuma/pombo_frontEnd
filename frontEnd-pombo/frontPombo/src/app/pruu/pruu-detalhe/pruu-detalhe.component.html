@@ -6,14 +6,11 @@
   <div class="card-body ">
 
     <form class="">
-
-
       <div class="mb-3">
         <textarea id="pruu" name="pruu" class="form-control border-dark" placeholder="Seja criativo, digite algo!"
           required maxlength="300" rows="5" pattern="\S+.*"
           title="O texto deve ter pelo menos 1 caractere, sem contar espaços em branco." [(ngModel)]="pruu.texto"></textarea>
       </div>
-
     </form>
   </div>
 
@@ -21,7 +18,9 @@
   <div class="row">
     <div class="col-md-2">
       <label for="pesquisar">&nbsp;</label>
-      <button type="button" class="form-control btn btn-outline-dark" >
-        <i class="bi bi-feather" (click)="salvarNovoPruu()"></i> &nbsp;Postar
+      <button type="button" class="form-control btn btn-outline-dark" (click)="salvarNovoPruu()">
+        <i class="bi bi-feather" ></i> &nbsp;Postar
       </button>
     </div>
+
+

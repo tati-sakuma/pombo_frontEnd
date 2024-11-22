@@ -12,29 +12,28 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class PruuDetalheComponent implements OnInit {
 
-  public pruu: Pruu;
+  public pruu: Pruu = new Pruu;
   public idUsuario: number;
+  public foto: File | null = null;
 
   constructor(private pruuService: PruuService, private router: Router) {}
 
   ngOnInit(): void {
-    let token = localStorage.getItem('tokenUsuarioAutenticado');
 
-    if(token){
-      let tokenJSON: any = jwtDecode(token);
-      this.idUsuario = tokenJSON.userId;
-    }
   }
-
 
 public salvarNovoPruu() {
   this.pruuService.novoPruu(this.pruu).subscribe({
     next: (resultado) => {
       this.pruu = resultado;
-      this.pruu.usuario.id = this.idUsuario;
       Swal.fire('Pruu postado com sucesso!').then((resultado) => {
         if (resultado.isConfirmed) {
           this.pruu = new Pruu();
+        }
+        if (this.foto) {
+          this.uploadImagem(resultado.id); // Faz o upload da imagem
+        } else {
+         // this.voltar(); // Caso não haja imagem, retornamos
         }
       });
     },
@@ -46,6 +45,21 @@ public salvarNovoPruu() {
         text: 'Erro ao cadastrar novo pruu:' + erroString,
       });
     },
+  });
+}
+
+uploadImagem(pruuId: string): void {
+  const formData = new FormData();
+  formData.append('imagem', this.foto!, this.foto!.name);
+
+  this.pruuService.salvarFotoPruu(pruuId, formData).subscribe({
+    next: () => {
+      Swal.fire('Imagem carregada com sucesso!', '', 'success');
+      //this.voltar();
+    },
+    error: (erro) => {
+      Swal.fire('Erro ao fazer upload da imagem: ' + erro.error, 'error');
+    }
   });
 }
 
