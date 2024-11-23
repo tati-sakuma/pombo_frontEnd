@@ -14,6 +14,24 @@
     </form>
   </div>
 
+  <div class="row mb-3">
+    <div class="col-md-12">
+        <label for="imagem" class="form-label">Adicione uma imagem</label>
+        <input type="file" class="form-control" (change)="onFileSelected($event)">
+    </div>
+</div>
+
+<!-- Preview da Imagem com Tamanho Fixo -->
+<div *ngIf="foto" class="row mb-3">
+  <div class="col-md-12 text-center">
+      <label>Pré-visualização da Imagem</label>
+      <div class="preview-container">
+          <img [src]="imagePreview" alt="Pré-visualização" class="img-fluid rounded shadow-sm"
+               style="max-width: 200px; max-height: 300px; object-fit: contain;" />
+      </div>
+  </div>
+</div>
+</div>
 
   <div class="row">
     <div class="col-md-2">

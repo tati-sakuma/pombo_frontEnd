@@ -31,21 +31,22 @@
           </div>
         </div>
 
-        <div>
-          <input
-        type="text"
-        class="form-control"
-        placeholder="Digite as palavras a serem localizadas..."
-        aria-label="Pesquisa"
-        name="texto"
-        [(ngModel)]="pruuSeletor.texto"
-      />
-        </div>
+        <div class="row mb-3 ">
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Digite as palavras a serem localizadas..."
+              aria-label="Pesquisa" name="texto" [(ngModel)]="pruuSeletor.texto" />
+<!-- ARRUMAR A BUSCA QUANOD O PI ALTERAR O BACK -->
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Digite o usuário a ser localizado..."
+              aria-label="Pesquisa" name="texto" [(ngModel)]="pruuSeletor.usuarioId" />
+          </div>
 
+        </div>
         <div class="row">
           <div class="col-md-2">
             <label for="pesquisar">&nbsp;</label>
-            <button type="button" class="form-control btn btn-outline-dark" (click)="listarPruuComFiltros()">
+            <button type="button" class="form-control btn btn-outline-dark" (click)="pesquisar()">
               <i class="bi bi-search"></i> Pesquisar
             </button>
           </div>

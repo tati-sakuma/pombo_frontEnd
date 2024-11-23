@@ -15,6 +15,7 @@ export class PruuDetalheComponent implements OnInit {
   public pruu: Pruu = new Pruu;
   public idUsuario: number;
   public foto: File | null = null;
+  public imagePreview: string | ArrayBuffer | null = null; // Para armazenar o preview da imagem
 
   constructor(private pruuService: PruuService, private router: Router) {}
 
@@ -30,12 +31,14 @@ public salvarNovoPruu() {
         if (resultado.isConfirmed) {
           this.pruu = new Pruu();
         }
-        if (this.foto) {
-          this.uploadImagem(resultado.id); // Faz o upload da imagem
-        } else {
-         // this.voltar(); // Caso não haja imagem, retornamos
-        }
+
       });
+
+      if (this.foto) {
+        this.uploadImagem(resultado.id); // Faz o upload da imagem
+      } else {
+       this.voltar(); // Caso não haja imagem, retornamos
+      }
     },
     error: (erro) => {
       let erroString = this.transformarErroEmString(erro.error);
@@ -50,19 +53,42 @@ public salvarNovoPruu() {
 
 uploadImagem(pruuId: string): void {
   const formData = new FormData();
-  formData.append('imagem', this.foto!, this.foto!.name);
+  formData.append('foto', this.foto!, this.foto!.name);
+  formData.append('pruuId', pruuId);
 
-  this.pruuService.salvarFotoPruu(pruuId, formData).subscribe({
+  this.pruuService.salvarFotoPruu(formData).subscribe({
     next: () => {
       Swal.fire('Imagem carregada com sucesso!', '', 'success');
-      //this.voltar();
+      this.voltar();
     },
     error: (erro) => {
-      Swal.fire('Erro ao fazer upload da imagem: ' + erro.error, 'error');
+      let erroString = this.transformarErroEmString(erro.error);
+
+      Swal.fire('Erro ao fazer upload da imagem: ' + erroString, 'error');
     }
   });
 }
 
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+  if (file && file.size <= 10 * 1024 * 1024) { // Limite de 10MB
+    this.foto = file;
+
+    // Gerar o preview da imagem
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result; // Definir o preview da imagem
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert('Tamanho de arquivo não permitido! Máximo: 10MB.');
+    this.foto = null;
+    this.imagePreview = null; // Limpar o preview se não for um arquivo válido
+  }
+}
+
+
+//Método para tratar Json de erros
 private transformarErroEmString(erro: any): string {
   if (typeof erro === 'object') {
     return Object.entries(erro)
@@ -70,6 +96,10 @@ private transformarErroEmString(erro: any): string {
       .join(', ');
   }
   return String(erro);
+}
+
+voltar(): void {
+  this.router.navigate(['/pruu']);
 }
 
 

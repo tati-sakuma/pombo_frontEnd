@@ -22,4 +22,8 @@ export class PruuService {
     return this.httpClient.post<Pruu>(this.API, novoPruu);
   }
 
+  public salvarFotoPruu(formData: FormData): Observable<any> {
+    return this.httpClient.post(`${this.API}/salvar-foto-pruu`, formData);
+  }
+
 }

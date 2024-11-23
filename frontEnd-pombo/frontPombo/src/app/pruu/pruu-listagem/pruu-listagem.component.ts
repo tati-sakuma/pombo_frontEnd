@@ -23,7 +23,7 @@ export class PruuListagemComponent implements OnInit {
   }
 
 
-  public listarPruuComFiltros() {
+  public pesquisar() {
     this.pruuService.listarComFiltros(this.pruuSeletor).subscribe({
       next: (resultado) => {
         this.pruus = resultado;
@@ -45,7 +45,7 @@ export class PruuListagemComponent implements OnInit {
 
 
 
-
+// Método para tratar o Json de erro
   private transformarErroEmString(erro: any): string {
     if (typeof erro === 'object') {
       return Object.entries(erro)
