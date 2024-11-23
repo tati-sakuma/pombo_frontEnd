@@ -5,40 +5,44 @@
 
   <div class="card-body ">
 
-    <form class="">
+    <form #ngForm="ngForm">
       <div class="mb-3">
-        <textarea id="pruu" name="pruu" class="form-control border-dark" placeholder="Seja criativo, digite algo!"
+        <textarea id="pruu" name="pruu" class="form-control border-dark"
+          placeholder="Seja criativo, digite algo!"
           required maxlength="300" rows="5" pattern="\S+.*"
-          title="O texto deve ter pelo menos 1 caractere, sem contar espaços em branco." [(ngModel)]="pruu.texto"></textarea>
+          title="O texto deve ter pelo menos 1 caractere, sem contar espaços em branco."
+          [(ngModel)]="pruu.texto"
+          [ngClass]="(!pruu.texto && ngForm.dirty) ? 'form-control is-invalid' : 'form-control'"
+          ></textarea>
+
       </div>
     </form>
   </div>
 
   <div class="row mb-3">
     <div class="col-md-12">
-        <label for="imagem" class="form-label">Adicione uma imagem</label>
-        <input type="file" class="form-control" (change)="onFileSelected($event)">
+      <label for="imagem" class="form-label">Adicione uma imagem</label>
+      <input type="file" class="form-control" (change)="onFileSelected($event)">
     </div>
-</div>
 
-<!-- Preview da Imagem com Tamanho Fixo -->
-<div *ngIf="foto" class="row mb-3">
-  <div class="col-md-12 text-center">
-      <label>Pré-visualização da Imagem</label>
-      <div class="preview-container">
+    <!-- Preview da Imagem com Tamanho Fixo -->
+    <div *ngIf="foto" class="row mb-3">
+      <div class="col-md-12 text-center">
+        <label>Pré-visualização da Imagem</label>
+        <div class="preview-container">
           <img [src]="imagePreview" alt="Pré-visualização" class="img-fluid rounded shadow-sm"
-               style="max-width: 200px; max-height: 300px; object-fit: contain;" />
+            style="max-width: 200px; max-height: 300px; object-fit: contain;" />
+        </div>
       </div>
+    </div>
   </div>
-</div>
-</div>
 
   <div class="row">
     <div class="col-md-2">
       <label for="pesquisar">&nbsp;</label>
-      <button type="button" class="form-control btn btn-outline-dark" (click)="salvarNovoPruu()">
-        <i class="bi bi-feather" ></i> &nbsp;Postar
+      <button type="button" class="form-control btn btn-outline-dark" (click)="salvarNovoPruu()" [disabled]="!ngForm.valid">
+        <i class="bi bi-feather"></i> &nbsp;Postar
       </button>
     </div>
 
-
+  </div>
