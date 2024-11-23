@@ -3,34 +3,28 @@ import { PruuDTO } from './dto/pruu.dto';
 import { Usuario } from './usuario';
 
 export class Pruu {
-  id: string;
-  usuario!: Usuario;
-  likedByUsers: Usuario[] = [];
-  denuncias: Denuncia[] = [];
+  id!: string;
   texto!: string;
-  imagem?: string;
-  bloqueado: boolean = false;
-  excluido: boolean = false;
-  dataHoraCriacao: Date = new Date();
+  imagem: string;
+  usuarioId!: number;
+  usuarioNome!: string;
+  usuarioFotoPerfil?: string | null;
+  quantidadeLikes!: number;
+  quantidadeDenuncias!: number;
+  dataHoraCriacao!: Date;
 
   // Método estático para converter para DTO
-  static paraDTO(
-    pruu: Pruu,
-    quantidadeLikes: number,
-    quantidadeDenuncias: number,
-    imagemPruu: string,
-    fotoPerfil: string
-  ): PruuDTO {
-    return new PruuDTO(
-      pruu.id,
-      pruu.texto,
-      imagemPruu,
-      pruu.usuario.id,
-      pruu.usuario.nome,
-      fotoPerfil,
-      quantidadeLikes,
-      quantidadeDenuncias,
-      pruu.dataHoraCriacao
-    );
+  static fromDTO(dto: PruuDTO): Pruu {
+    const pruu = new Pruu();
+    pruu.id = dto.pruuId;
+    pruu.texto = dto.pruuConteudo;
+    pruu.imagem = dto.pruuImagem;
+    pruu.usuarioId = dto.usuarioId;
+    pruu.usuarioNome = dto.usuarioNome;
+    pruu.usuarioFotoPerfil = dto.usuarioFotoPerfil;
+    pruu.quantidadeLikes = dto.quantidadeLikes;
+    pruu.quantidadeDenuncias = dto.quantidadeDenuncias;
+    pruu.dataHoraCriacao = new Date(dto.criadoEm);
+    return pruu;
   }
 }

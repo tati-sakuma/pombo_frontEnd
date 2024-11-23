@@ -4,6 +4,7 @@ import { PruuService } from '../../shared/service/pruu.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PruuSeletor } from '../../shared/model/seletor/pruu.seletor';
+import { PruuDTO } from '../../shared/model/dto/pruu.dto';
 
 @Component({
   selector: 'app-pruu-listagem',
@@ -12,7 +13,7 @@ import { PruuSeletor } from '../../shared/model/seletor/pruu.seletor';
 })
 export class PruuListagemComponent implements OnInit {
 
-  public pruus: Pruu[] = [];
+  public pruus: PruuDTO[] = [];
   public pruuSeletor = new PruuSeletor;
 
   constructor(private pruuService: PruuService,

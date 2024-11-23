@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Pruu } from '../model/pruu';
 import { Observable } from 'rxjs';
 import { PruuSeletor } from '../model/seletor/pruu.seletor';
+import { PruuDTO } from '../model/dto/pruu.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class PruuService {
   constructor(private httpClient: HttpClient) { }
 
 
-  public listarComFiltros(pruuSeletor: PruuSeletor): Observable<Array<Pruu>> {
-    return this.httpClient.post<Array<Pruu>>(this.API + "/filtros", pruuSeletor);
+  public listarComFiltros(pruuSeletor: PruuSeletor): Observable<Array<PruuDTO>> {
+    return this.httpClient.post<Array<PruuDTO>>(this.API + "/filtros", pruuSeletor);
   }
 
   public novoPruu(novoPruu: Pruu): Observable<Pruu> {

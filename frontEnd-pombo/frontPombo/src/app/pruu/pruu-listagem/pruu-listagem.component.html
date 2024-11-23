@@ -1,4 +1,5 @@
 <pre>{{pruuSeletor | json}}</pre>
+<!-- <pre>{{pruus | json}}</pre> -->
 <app-home></app-home>
 
 <div class="container-fluid mt-5 " style="max-width: 1000px;">
@@ -23,8 +24,8 @@
           </div>
 
           <div class="col-md-4">
-            <label for="pago">Curtido</label>
-            <select class="form-control" id="pago" [(ngModel)]="pruuSeletor.estaCurtido" name="pago">
+            <label for="curtido">Curtido</label>
+            <select class="form-control" id="curtido" [(ngModel)]="pruuSeletor.estaCurtido" name="curtido">
               <option [ngValue]="true">Sim</option>
               <option [ngValue]="false">Não</option>
             </select>
@@ -63,46 +64,17 @@
   </div>
 
 
-
-  <!-- Message 1 -->
-  <div class="message-container  mt-5">
-    <div class="message-header">
-      <div class="user-avatar"></div>
-      <div>
-        <span class="user-name">João Silva</span>
-        <br>
-        <span class="message-time">10 minutos atrás</span>
-      </div>
-    </div>
-    <p class="message-text">Hoje o céu está lindo e a praia está incrível. Venham conferir!</p>
-  </div>
-  <hr>
-
-  <!-- Message 1 -->
-  <div class="message-container">
-    <div class="message-header">
-      <div class="user-avatar"></div>
-      <div>
-        <span class="user-name">João Silva</span>
-        <br>
-        <span class="message-time">10 minutos atrás</span>
-      </div>
-    </div>
-    <p class="message-text">Hoje o céu está lindo e a praia está incrível. Venham conferir!</p>
-  </div>
-  <hr>
-
-
   <div *ngFor="let pruu of pruus" class="message-container  mt-5">
     <div class="message-header">
       <div class="user-avatar"></div>
       <div>
-        <span class="user-name">{{ pruu.usuario.nome }}</span>
+        <span class="user-name">{{ pruu.usuarioNome }}</span>
         <br>
-        <span class="message-time">{{ pruu.dataHoraCriacao| date:'dd/MM/yyyy HH:mm' }}</span>
+        <span class="message-time">{{ pruu.criadoEm| date:'dd/MM/yyyy HH:mm' }}</span>
       </div>
     </div>
-    <p class="message-text">{{ pruu.texto }}</p>
+    <p class="message-text">{{ pruu.pruuConteudo }}</p>
+    <img *ngIf="pruu.pruuImagem" [src]="pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image">
     <hr>
   </div>
 </div>

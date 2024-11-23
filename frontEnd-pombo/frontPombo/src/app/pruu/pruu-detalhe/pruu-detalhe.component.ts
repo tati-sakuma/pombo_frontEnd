@@ -53,7 +53,7 @@ public salvarNovoPruu() {
 
 uploadImagem(pruuId: string): void {
   const formData = new FormData();
-  formData.append('foto', this.foto!, this.foto!.name);
+  formData.append('foto', this.foto!);
   formData.append('pruuId', pruuId);
 
   this.pruuService.salvarFotoPruu(formData).subscribe({
