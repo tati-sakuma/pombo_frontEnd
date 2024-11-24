@@ -1,20 +1,36 @@
-<pre>{{usuarios | json}}</pre>
-
 <div>
-  <table class="table table-striped">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Email</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr scope="row" *ngFor="let usuario of usuarios">
-              <td>{{ usuario.id }}</td>
-              <td>{{ usuario.nome }}</td>
-              <td>{{ usuario.email }}</td>
-          </tr>
-      </tbody>
+  <!-- Botão para pesquisar todos os usuários -->
+  <button class="btn btn-primary" (click)="pesquisarTodosUsuarios()">
+    Pesquisar Usuários
+  </button>
+</div>
+
+<div *ngIf="loading" class="mt-3">
+  <!-- Indicador de carregamento -->
+  <p>Carregando usuários...</p>
+</div>
+
+<div *ngIf="!loading">
+  <!-- Tabela para exibir os usuários -->
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.email }}</td>
+      </tr>
+    </tbody>
   </table>
+
+  <!-- Exibir mensagem se não houver usuários -->
+  <p *ngIf="usuarios.length === 0" class="mt-3">
+    Nenhum usuário encontrado.
+  </p>
 </div>

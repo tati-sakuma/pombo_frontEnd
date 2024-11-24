@@ -34,5 +34,30 @@
 
 hr
   border: none
-  border-top: 1px solid #e0e0e0
+  border-top: 1px solid #e0e0e0// Ícone do coração
+
+
+.btn-like
+  border: none
+  background: transparent
+  cursor: pointer
+
+
+  .bi
+    font-size: 1.2rem
+    transition: color 0.3s ease // Suaviza a transição de cor
+
+    // Ícone vazio
+    &.bi-heart
+      color: #808080 // Cinza para o coração vazio
+
+      &:hover
+        color: darken(#808080, 20%) // Escurece no hover
+
+    // Ícone preenchido
+    &.bi-heart-fill
+      color: #375A7F // Cor primária para o coração preenchido
+
+      &:hover
+        color: lighten(#375A7F, 10%)
 

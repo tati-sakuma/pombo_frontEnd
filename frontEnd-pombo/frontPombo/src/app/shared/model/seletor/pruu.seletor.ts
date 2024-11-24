@@ -2,8 +2,11 @@ import { BaseSeletor } from "./base.seletor";
 
 export class PruuSeletor extends BaseSeletor {
   texto?: string;
-  dataInicioCriacao?: Date;
-  dataFimCriacao?: Date;
+  dataInicioCriacao?: string;
+  dataFimCriacao?: string;
   usuarioId?: number;
-  estaCurtido?: boolean;
+  usuarioNome?: string;
+  excluido?: string;
+  bloqueado?: string;
+  estaCurtido: boolean;
 }

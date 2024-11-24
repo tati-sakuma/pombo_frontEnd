@@ -6,31 +6,34 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-usuario-listagem',
   templateUrl: './usuario-listagem.component.html',
-  styleUrl: './usuario-listagem.component.sass'
+  styleUrl: './usuario-listagem.component.sass',
 })
 export class UsuarioListagemComponent implements OnInit {
-
   public usuarios: Usuario[] = [];
 
-  constructor(private usuarioService: UsuarioService){}
+  constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
-    this.pesquisarTodosUsuarios();
-
+     this.pesquisarTodosUsuarios();
   }
+  loading: boolean = true;
 
-  private pesquisarTodosUsuarios () {
+  public pesquisarTodosUsuarios() {
+    this.loading = true;
     this.usuarioService.pesquisarTodos().subscribe(
-      resultado => {
+      (resultado) => {
         this.usuarios = resultado;
+        this.loading = false;
       },
-    erro => {
+      (erro) => {
+        console.error('Erro ao listar usuários:', erro);
+        this.loading = false;
         Swal.fire({
           icon: 'error',
           title: 'Erro ao listar todos usuários.',
-          text: 'Erro ao listar todos usuários.' 
+          text: 'Erro ao listar todos usuários.',
         });
       }
-  )
+    );
   }
 }

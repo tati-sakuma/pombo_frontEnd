@@ -8,5 +8,6 @@ export class PruuDTO {
   quantidadeLikes: number;
   quantidadeDenuncias: number;
   criadoEm: string;
+  estaCurtido: boolean;
 
 }

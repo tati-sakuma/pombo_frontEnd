@@ -27,4 +27,8 @@ export class PruuService {
     return this.httpClient.post(`${this.API}/salvar-foto-pruu`, formData);
   }
 
+  public darLike(pruuId: string): Observable<void> {
+    return this.httpClient.post<void>(`${this.API}/dar-like/${pruuId}`, {});
+  }
+
 }

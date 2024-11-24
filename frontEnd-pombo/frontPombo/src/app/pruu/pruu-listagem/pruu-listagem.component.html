@@ -36,8 +36,8 @@
           <div class="col-md-4">
             <input type="text" class="form-control" placeholder="Digite as palavras a serem localizadas..."
               aria-label="Pesquisa" name="texto" [(ngModel)]="pruuSeletor.texto" />
-<!-- ARRUMAR A BUSCA QUANOD O PI ALTERAR O BACK -->
           </div>
+
           <div class="col-md-4">
             <input type="text" class="form-control" placeholder="Digite o usuário a ser localizado..."
               aria-label="Pesquisa" name="texto" [(ngModel)]="pruuSeletor.usuarioId" />
@@ -75,6 +75,33 @@
     </div>
     <p class="message-text">{{ pruu.pruuConteudo }}</p>
     <img *ngIf="pruu.pruuImagem" [src]="pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image">
+  <div>
+    <span class="btn-like" (click)="atualizarLike(pruu)">
+      <i
+        class="bi"
+        [ngClass]="pruu.estaCurtido ? 'bi-heart-fill' : 'bi-heart'"
+      ></i>
+      {{ pruu.quantidadeLikes }}
+    </span>
+  </div>
     <hr>
   </div>
+
+
+
+
+  <!-- Paginação -->
+  <!-- <nav aria-label="Navegação de página">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="pruuSeletor.pagina === 1">
+        <button class="page-link" (click)="mudarPagina(pruuSeletor.pagina - 1)">Anterior</button>
+      </li>
+      <li class="page-item" *ngFor="let pagina of paginas" [class.active]="pagina === pruuSeletor.pagina">
+        <button class="page-link" (click)="mudarPagina(pagina)">{{ pagina }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="pruuSeletor.pagina === totalPaginas">
+        <button class="page-link" (click)="mudarPagina(pruuSeletor.pagina + 1)">Próxima</button>
+      </li>
+    </ul>
+  </nav> -->
 </div>

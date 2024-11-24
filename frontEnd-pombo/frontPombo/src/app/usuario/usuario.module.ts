@@ -5,6 +5,8 @@ import { UsuarioRoutingModule } from './usuario-routing.module';
 import { UsuarioListagemComponent } from './usuario-listagem/usuario-listagem.component';
 import { UsuarioDetalheComponent } from './usuario-detalhe/usuario-detalhe.component';
 import { FormsModule } from '@angular/forms';
+import { HomeModule } from '../home/home.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     UsuarioRoutingModule,
-    FormsModule
+    FormsModule,
+    HomeModule,
+    RouterModule
   ]
 })
 export class UsuarioModule { }
