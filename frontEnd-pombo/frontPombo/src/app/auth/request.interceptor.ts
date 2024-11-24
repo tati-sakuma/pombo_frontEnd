@@ -8,7 +8,9 @@ import { catchError, throwError } from "rxjs";
     const tokenUsuarioAutenticado = localStorage.getItem('tokenUsuarioAutenticado');
     let authReq = req;
 
-    if (tokenUsuarioAutenticado) {
+
+    if (tokenUsuarioAutenticado && !req.url.includes("authenticate")) {
+
       authReq = req.clone({
           setHeaders: { Authorization: `Bearer ${tokenUsuarioAutenticado}` }
       });
