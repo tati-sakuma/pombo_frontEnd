@@ -1,0 +1,27 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+  <div class="row text-center p-2 align-items-center justify-content-center" style="width: 60%;">
+    <div class="col col-md-8 pt-5">
+      <div class="card border-dark shadow rounded">
+        <!-- Cabeçalho -->
+        <div class="card-header custom-bg-primary">
+          <h3 class="text-center text-white pt-2">Detalhes da Denúncia</h3>
+        </div>
+        <!-- Corpo -->
+        <div class="card-body">
+          <p><strong>Mensagem:</strong> {{ denuncia.mensagem }}</p>
+          <p><strong>Denunciante:</strong> {{ denuncia.denunciante }}</p>
+          <p><strong>Motivo:</strong> {{ denuncia.motivo }}</p>
+          <p><strong>Situação:</strong> {{ denuncia.situacao }}</p>
+          <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-success w-45" (click)="atualizarSituacao('aceita')">
+              <i class="bi bi-check-circle"></i> Aceitar
+            </button>
+            <button class="btn btn-danger w-45" (click)="atualizarSituacao('recusada')">
+              <i class="bi bi-x-circle"></i> Recusar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
