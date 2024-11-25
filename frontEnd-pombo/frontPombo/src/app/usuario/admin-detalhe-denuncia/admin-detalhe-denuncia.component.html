@@ -1,0 +1,9 @@
+<div class="admin-detalhe-denuncia">
+  <h1>Detalhes da Denúncia</h1>
+  <p><strong>Mensagem:</strong> {{ denuncia.mensagem }}</p>
+  <p><strong>Denunciante:</strong> {{ denuncia.denunciante }}</p>
+  <p><strong>Motivo:</strong> {{ denuncia.motivo }}</p>
+  <p><strong>Situação:</strong> {{ denuncia.situacao }}</p>
+  <button (click)="atualizarSituacao('aceita')">Aceitar</button>
+  <button (click)="atualizarSituacao('recusada')">Recusar</button>
+</div>

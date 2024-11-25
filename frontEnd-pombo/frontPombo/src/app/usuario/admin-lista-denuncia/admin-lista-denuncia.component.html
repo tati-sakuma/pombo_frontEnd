@@ -1,0 +1,23 @@
+<div class="admin-lista-denuncia">
+  <h1>Lista de Denúncias</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>UUID Mensagem</th>
+        <th>Total de Denúncias</th>
+        <th>Situação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let denuncia of denuncias">
+        <td>{{ denuncia.mensagemUuid }}</td>
+        <td>{{ denuncia.totalDenuncias }}</td>
+        <td>{{ denuncia.situacao }}</td>
+        <td>
+          <button (click)="navegarParaDetalhe(denuncia.id)">Detalhar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
