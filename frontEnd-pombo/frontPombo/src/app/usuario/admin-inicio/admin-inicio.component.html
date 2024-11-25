@@ -1,8 +1,30 @@
-<div class="admin-dashboard">
-  <h1>Painel Administrativo</h1>
-  <div class="admin-options">
-    <a routerLink="/usuario/admin/lista-denuncia">Listar Denúncias</a>
-    <a routerLink="/usuario">Gerenciar Usuários</a>
-    <a routerLink="/pruu">Gerenciar Mensagens</a>
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+  <div class="row text-center p-2 align-items-center justify-content-center" style="width: 60%;">
+    <div class="col col-md-8 pt-5">
+      <div class="card border-dark shadow rounded">
+        <!-- Cabeçalho -->
+        <div class="card-header custom-bg-primary">
+          <h3 class="text-center text-white pt-2">Painel Administrativo</h3>
+        </div>
+        <!-- Corpo -->
+        <div class="card-body">
+          <p class="text-muted text-center">Gerencie os recursos do sistema abaixo:</p>
+          <div class="list-group">
+            <!-- Link para Listar Denúncias -->
+            <a routerLink="/usuario/admin/lista-denuncia" class="list-group-item list-group-item-action">
+              <i class="bi bi-exclamation-circle"></i> Listar Denúncias
+            </a>
+            <!-- Link para Gerenciar Usuários -->
+            <a routerLink="/usuario" class="list-group-item list-group-item-action">
+              <i class="bi bi-people"></i> Gerenciar Usuários
+            </a>
+          </div>
+        </div>
+        <!-- Rodapé -->
+        <div class="card-footer text-center">
+          <small class="text-muted">© 2024 - O Pombo</small>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
