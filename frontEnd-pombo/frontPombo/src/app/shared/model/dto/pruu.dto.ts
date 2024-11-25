@@ -9,5 +9,4 @@ export class PruuDTO {
   quantidadeDenuncias: number;
   criadoEm: string;
   estaCurtido: boolean;
-
 }
