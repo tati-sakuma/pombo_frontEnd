@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model/usuario';
+import { UsuarioDTO } from '../model/dto/usuario.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +27,13 @@ export class UsuarioService {
     return this.httpClient.put<Usuario>(`${this.API}`, usuario);
   }
 
-  buscarUsuarioAutenticado(): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.API}/autenticado`);
+  public buscarUsuarioAutenticado(): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(`${this.API}/usuario-autenticado`);
   }
+
+  getUsuarioPorId(id: number): Observable<UsuarioDTO> {
+    return this.httpClient.get<UsuarioDTO>(`${this.API}/usuarios/${id}`);
+  }
+
 
 }

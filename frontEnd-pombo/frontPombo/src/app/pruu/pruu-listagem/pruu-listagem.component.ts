@@ -117,7 +117,7 @@ public pesquisarTodosUsuarios(): void {
 
   public editarPruu(pruu: PruuDTO): void {
     Swal.fire({
-      title: 'Editar Mensagem',
+      title: 'Editar Pruu',
       input: 'textarea',
       inputLabel: 'Edite o conteúdo do seu Pruu',
       inputValue: pruu.pruuConteudo, // Preenche o input com o conteúdo atual do Pruu
