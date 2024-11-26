@@ -8,6 +8,7 @@ import { PruuDTO } from '../../shared/model/dto/pruu.dto';
 import { UsuarioService } from '../../shared/service/usuario.service';
 import { Usuario } from '../../shared/model/usuario';
 import { DenunciaService } from '../../shared/service/denuncia.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-pruu-listagem',
@@ -35,6 +36,16 @@ export class PruuListagemComponent implements OnInit {
     this.pruuSeletor.pagina = 1;
     this.pruuSeletor.limite = this.TAMANHO_PAGINA;
     this.pesquisar();
+    this.pesquisarTodosUsuarios();
+    let token;
+    if(localStorage){
+      token = localStorage.getItem('tokenUsuarioAutenticado');
+    }
+
+    if(token){
+      let tokenJSON: any = jwtDecode(token);
+      this.loggedUserId = tokenJSON?.userId;
+    }
   }
 
   public pesquisar(): void {
@@ -46,16 +57,12 @@ export class PruuListagemComponent implements OnInit {
       return;
     }
 
-    this.pruuService
-      .listarComFiltros(
-        this.pruuSeletor,
-        this.pruuSeletor.pagina - 1,
-        this.TAMANHO_PAGINA
-      )
+    this.pruuService.listarComFiltros(this.pruuSeletor, this.pruuSeletor.pagina - 1, this.TAMANHO_PAGINA)
       .subscribe({
         next: (resultado: any) => {
           console.log('Página Atual:', this.paginaAtual);
           console.log('Total de Páginas:', this.totalPaginas);
+          console.log('Total de Páginas:', resultado.totalPages);
           this.pruus = resultado.content;
           this.totalPaginas = resultado.totalPages;
           this.paginaAtual = resultado.number + 1;
@@ -70,6 +77,22 @@ export class PruuListagemComponent implements OnInit {
         },
       });
   }
+
+public pesquisarTodosUsuarios(): void {
+  this.usuarioService.pesquisarTodos().subscribe({
+    next: (resultado) => {
+      this.usuarios = resultado;
+    },
+    error: (erro) => {
+      console.error('Erro ao listar os usuários:', erro);
+      Swal.fire({
+        title: 'Erro!',
+        text: 'Erro ao consultar todos os pruus: ' + erro,
+        icon: 'error',
+      });
+    },
+  });
+}
 
   public atualizarLike(pruu: PruuDTO) {
     this.pruuService.darLike(pruu.pruuId).subscribe({
@@ -87,13 +110,37 @@ export class PruuListagemComponent implements OnInit {
     return pruu.usuarioId === this.loggedUserId;
   }
 
-  public editarPruu(pruu: PruuDTO) {
-    Swal.fire(
-      'Editar',
-      `Editar funcionalidade para o Pruu: ${pruu.pruuId}`,
-      'info'
-    );
-    // Lógica para abrir um modal ou redirecionar para a página de edição
+  public editarPruu(pruu: PruuDTO): void {
+    Swal.fire({
+      title: 'Editar Mensagem',
+      input: 'textarea',
+      inputLabel: 'Edite o conteúdo do seu Pruu',
+      inputValue: pruu.pruuConteudo, // Preenche o input com o conteúdo atual do Pruu
+      showCancelButton: true,
+      confirmButtonText: 'Salvar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'O conteúdo não pode ser vazio!';
+        }
+        return null; // Retorna null se o valor é válido
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let novoConteudo = result.value;
+        // Chama o serviço para salvar as alterações
+        this.pruuService.atualizarPruu(pruu.pruuId, novoConteudo).subscribe({
+          next: () => {
+            pruu.pruuConteudo = novoConteudo; // Atualiza a mensagem no frontend
+            Swal.fire('Atualizado!', 'Sua mensagem foi atualizada com sucesso.', 'success');
+          },
+          error: (erro) => {
+            console.error('Erro ao atualizar o Pruu:', erro);
+            Swal.fire('Erro!', 'Houve um problema ao atualizar sua mensagem.', 'error');
+          },
+        });
+      }
+    });
   }
 
   public excluirPruu(pruu: PruuDTO) {

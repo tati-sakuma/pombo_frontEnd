@@ -34,14 +34,24 @@
 
         <div class="row mb-3 ">
           <div class="col-md-4">
+            <label for="curtido">Busca por conteúdo de pruu</label>
+
             <input type="text" class="form-control" placeholder="Digite as palavras a serem localizadas..."
               aria-label="Pesquisa" name="texto" [(ngModel)]="pruuSeletor.texto" />
           </div>
 
           <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Digite o usuário a ser localizado..."
-              aria-label="Pesquisa" name="texto" [(ngModel)]="pruuSeletor.usuarioId" />
+            <label for="curtido">Busca por nome de usuário</label>
+
+            <select type="text" class="form-control" name="usuario" [(ngModel)]="pruuSeletor.usuarioNome">
+
+              @for(u of usuarios; track u) {
+              <option value="{{ u.nome }}">{{ u.nome }}</option>
+              }
+            </select>
           </div>
+
+
 
         </div>
         <div class="row">
@@ -86,6 +96,24 @@
 
 
 
+      <!-- Botões de Editar e Excluir se for do usuário logado -->
+      <ng-container *ngIf="isLoggedUser(pruu)">
+        <button
+          class="btn btn-sm btn-primary"
+          (click)="editarPruu(pruu)"
+          title="Editar Pruu"
+        >
+          <i class="bi bi-pencil"></i> Editar
+        </button>
+        <button
+          class="btn btn-sm btn-danger"
+          (click)="excluirPruu(pruu)"
+          title="Excluir Pruu"
+        >
+          <i class="bi bi-trash"></i> Excluir
+        </button>
+      </ng-container>
+      
     </div>
     <hr>
   </div>

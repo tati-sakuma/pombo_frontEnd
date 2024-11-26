@@ -21,6 +21,10 @@ export class PruuService {
     return this.httpClient.post<Page<PruuDTO>>(`${this.API}/filtros?pagina=${pagina}&tamanho=${tamanho}`, pruuSeletor);
   }
 
+  public atualizarPruu(pruuId: string, novoConteudo: string): Observable<void> {
+    const body = { pruuConteudo: novoConteudo }; // Define o payload esperado pelo backend
+    return this.httpClient.put<void>(`${this.API}/atualizar/${pruuId}`, body);
+  }
 
   public novoPruu(novoPruu: Pruu): Observable<Pruu> {
     return this.httpClient.post<Pruu>(this.API, novoPruu);

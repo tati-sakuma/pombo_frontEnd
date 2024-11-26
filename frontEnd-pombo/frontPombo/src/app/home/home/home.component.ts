@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit{
       this.ehAdministrador = tokenJSON?.roles == 'ADMIN';
 
       if(this.ehAdministrador){
-        this.router.navigate(['/home/cartas']);
+        this.router.navigate(['/home']);
       }
     } else {
      this.router.navigate(['/login']);
