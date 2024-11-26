@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../shared/model/usuario';
 import { UsuarioService } from '../../shared/service/usuario.service';
 import Swal from 'sweetalert2';
+import { UsuarioDetalheDTO } from '../../shared/model/dto/usuario.detalhe.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario-detalhe',
@@ -11,8 +13,13 @@ import Swal from 'sweetalert2';
 export class UsuarioDetalheComponent implements OnInit {
   public usuario: Usuario = new Usuario();
   public fotoSelecionada: File | null = null;
+  public usuarioDetalheDto: UsuarioDetalheDTO = new UsuarioDetalheDTO();
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+
+  ) {}
 
   ngOnInit(): void {
     this.carregarUsuarioAutenticado();
@@ -41,10 +48,21 @@ export class UsuarioDetalheComponent implements OnInit {
     }
   }
 
-  public salvarAlteracoes(): void {
-    this.usuarioService.atualizarUsuario(this.usuario).subscribe({
-      next: (usuarioAtualizado) => {
-        this.usuario = usuarioAtualizado;
+  public editarUsuario(): void {
+    this.usuarioDetalheDto = {
+      id: this.usuario.id,
+      nome: this.usuario.nome,
+      email: this.usuario.email,
+      senha: this.usuario.password,
+    };
+
+    this.usuarioService.atualizarUsuario(this.usuarioDetalheDto).subscribe({
+      next: (usuarioAtualizado: Usuario) => {
+        this.usuario.id = usuarioAtualizado.id;
+        this.usuario.nome = usuarioAtualizado.nome;
+        this.usuario.email = usuarioAtualizado.email;
+        this.usuario.password = usuarioAtualizado.password;
+
         Swal.fire(
           'Sucesso!',
           'Seus dados foram atualizados com sucesso.',
@@ -77,5 +95,35 @@ export class UsuarioDetalheComponent implements OnInit {
         },
       });
     }
+  }
+
+  public excluirUsuario(): void {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter essa ação!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usuarioService.excluirUsuario(this.usuario.id).subscribe({
+          next: () => {
+            Swal.fire('Excluído!', 'Seu usuário foi excluído com sucesso.', 'success').then(() => {
+              localStorage.removeItem('tokenUsuarioAutenticado'); // Remove o token após exclusão
+              this.router.navigate(['/login']); // Redireciona para a tela de login
+            });
+          },
+          error: (erro) => {
+            console.error('Erro ao excluir usuário:', erro);
+            Swal.fire(
+              'Erro!',
+              erro.error?.message || 'Não foi possível excluir o usuário.',
+              'error'
+            );
+          },
+        });
+      }
+    });
   }
 }

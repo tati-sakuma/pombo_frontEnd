@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model/usuario';
 import { UsuarioDTO } from '../model/dto/usuario.dto';
+import { UsuarioDetalheDTO } from '../model/dto/usuario.detalhe.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -23,16 +24,20 @@ export class UsuarioService {
     return this.httpClient.post<void>(`${this.API}/salvar-foto-perfil`,formData);
   }
 
-  atualizarUsuario(usuario: Usuario): Observable<Usuario> {
-    return this.httpClient.put<Usuario>(`${this.API}`, usuario);
-  }
-
   public buscarUsuarioAutenticado(): Observable<Usuario> {
     return this.httpClient.get<Usuario>(`${this.API}/usuario-autenticado`);
   }
 
-  getUsuarioPorId(id: number): Observable<UsuarioDTO> {
+  public getUsuarioPorId(id: number): Observable<UsuarioDTO> {
     return this.httpClient.get<UsuarioDTO>(`${this.API}/usuarios/${id}`);
+  }
+
+  public atualizarUsuario(usuarioDetalheDTO: UsuarioDetalheDTO): Observable<Usuario> {
+    return this.httpClient.put<Usuario>(`${this.API}`, usuarioDetalheDTO);
+  }
+
+  excluirUsuario(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.API}/delete/${id}`);
   }
 
 
