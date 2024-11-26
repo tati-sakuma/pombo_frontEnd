@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Denuncia } from '../model/denuncia';
+import { Denuncia, DenunciaDados } from '../model/denuncia';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +15,11 @@ export class DenunciaService {
   criarDenuncia(denuncia: Denuncia): Observable<Denuncia> {
     return this.httpClient.post<Denuncia>(this.API, denuncia);}
 
-  listarComFiltros(seletor: any): Observable<any[]> {
+  listarComFiltros(seletor: any): Observable<DenunciaDados[]> {
     return this.httpClient.post<any[]>(`${this.API}/filtros`, seletor);
   }
 
-  buscarDenunciaPorId(id: string): Observable<any> {
+  buscarDenunciaPorId(id: string): Observable<Denuncia> {
     return this.httpClient.get<any>(`${this.API}/${id}`);
   }
 

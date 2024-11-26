@@ -10,3 +10,13 @@ export class Denuncia {
   dataDenuncia?: Date;
   analisada?: boolean = false;
 }
+
+export class DenunciaDados {
+  denunciaId: string;
+  denuncianteId: number;
+  denuncianteNome: string;
+  denunciaMotivo: string;
+  denunciaSituacao: string;
+  pruuId: string;
+  dataCriacao: Date;
+}

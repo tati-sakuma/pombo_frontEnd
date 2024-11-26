@@ -11,24 +11,28 @@
           <table class="table table-hover border">
             <thead class="custom-bg-secondary text-white">
               <tr>
-                <th>UUID Mensagem</th>
-                <th>Total de Denúncias</th>
+                <th>ID da Denuncia</th>
+                <th>Denunciante Nome</th>
+                 <th>Motivo</th>
                 <th>Situação</th>
                 <th class="text-center">Ações</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let denuncia of denuncias">
-                <td>{{ denuncia.mensagemUuid }}</td>
-                <td>{{ denuncia.totalDenuncias }}</td>
-                <td>{{ denuncia.situacao }}</td>
+            <tbody >
+            @for(denuncia of denuncias; track denuncia.denunciaId ){
+              <tr>
+                <td>{{ denuncia.denunciaId }}</td>
+                <td>{{ denuncia.denuncianteNome }}</td>
+                <td>{{ denuncia.denunciaMotivo }}</td>
+                <td>{{ denuncia.denunciaSituacao }}</td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-sm" (click)="navegarParaDetalhe(denuncia.id)">
+                  <button class="btn btn-primary btn-sm" (click)="navegarParaDetalhe(denuncia.denunciaId)">
                     <i class="bi bi-eye"></i> Detalhar
                   </button>
                 </td>
               </tr>
-            </tbody>
+            }
+          </tbody>
           </table>
         </div>
       </div>

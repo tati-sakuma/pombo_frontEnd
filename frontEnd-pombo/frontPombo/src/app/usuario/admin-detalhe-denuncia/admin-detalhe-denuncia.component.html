@@ -8,8 +8,9 @@
         </div>
         <!-- Corpo -->
         <div class="card-body">
-          <p><strong>Mensagem:</strong> {{ denuncia.mensagem }}</p>
-          <p><strong>Denunciante:</strong> {{ denuncia.denunciante }}</p>
+          <p><strong>Mensagem:</strong> {{ denuncia.pruu.texto }}</p>
+          <p><strong>ID Denunciante:</strong> {{ denuncia.denunciante.id }}</p>
+          <p><strong>Nome Denunciante:</strong> {{ denuncia.denunciante.nome }}</p>
           <p><strong>Motivo:</strong> {{ denuncia.motivo }}</p>
           <p><strong>Situação:</strong> {{ denuncia.situacao }}</p>
           <div class="d-flex justify-content-between mt-4">

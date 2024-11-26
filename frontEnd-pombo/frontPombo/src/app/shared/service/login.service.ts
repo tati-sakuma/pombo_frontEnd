@@ -19,6 +19,13 @@ export class LoginService {
        'Authorization': authHeader
     });
 
+    /*
+    if(response.status ===200){
+        if(response.ehAdmin){
+          this.router.navigate(['/admin']);
+          }
+    }
+    */
     return this.httpClient.post<string>(this.API + "/authenticate", dto, {
       headers,
       observe: 'response',

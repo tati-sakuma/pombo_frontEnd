@@ -32,7 +32,7 @@ export class AdminDetalheDenunciaComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.denunciaService
-        .atualizarSituacao(id, novaSituacao)
+        .atualizarSituacao(id, novaSituacao.toUpperCase())
         .subscribe(() => alert('Situação atualizada com sucesso!'));
     }
   }
