@@ -3,46 +3,35 @@ import { Usuario } from '../../shared/model/usuario';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthService } from '../../shared/service/auth-service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.sass'
+  styleUrl: './home.component.sass',
 })
-
-export class HomeComponent implements OnInit{
-
-  public idUsuarioAutenticado: number;
+export class HomeComponent implements OnInit {
   public ehAdministrador: boolean = false;
 
-  constructor(private router: Router,
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     let token;
 
-    if(localStorage){
+    if (localStorage) {
       token = localStorage.getItem('tokenUsuarioAutenticado');
     }
 
-    if(token){
-      let tokenJSON: any = jwtDecode(token);
-      this.ehAdministrador = tokenJSON?.roles == 'ADMIN';
-
-      if(this.ehAdministrador){
-        this.router.navigate(['/home']);
-      }
+    if (token) {
+      const tokenJSON: any = jwtDecode(token);
+      this.ehAdministrador = tokenJSON?.roles === 'ADMIN';
     } else {
-     this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
     }
   }
 
-  logout(){
+  public logout() {
     localStorage.removeItem('tokenUsuarioAutenticado');
     this.router.navigate(['/login']);
   }
 }
-
-
-
-
