@@ -51,7 +51,7 @@ public salvarNovoPruu() {
   });
 }
 
-uploadImagem(pruuId: string): void {
+public uploadImagem(pruuId: string): void {
   const formData = new FormData();
   formData.append('foto', this.foto!);
   formData.append('pruuId', pruuId);
@@ -69,7 +69,7 @@ uploadImagem(pruuId: string): void {
   });
 }
 
-onFileSelected(event: any) {
+public onFileSelected(event: any) {
   const file: File = event.target.files[0];
   if (file && file.size <= 10 * 1024 * 1024) { // Limite de 10MB
     this.foto = file;
@@ -98,7 +98,7 @@ private transformarErroEmString(erro: any): string {
   return String(erro);
 }
 
-voltar(): void {
+public voltar(): void {
   this.router.navigate(['/pruu']);
 }
 

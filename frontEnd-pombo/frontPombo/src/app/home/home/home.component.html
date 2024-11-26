@@ -6,29 +6,62 @@
     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-white" href="/clientes" role="button" data-bs-toggle="dropdown"
+        <a class="nav-link dropdown-toggle text-white" href="/pruu" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
-          Usuários
+          Pruu
         </a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="/pruu">Buscar Pruus</a></li>
-          <li><hr class="dropdown-divider"></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
           <li><a class="dropdown-item" href="/pruu/detalhe">Novo Pruu</a></li>
-          <li><hr class="dropdown-divider"></li>
+
+
+        </ul>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Usuário
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/usuario/detalhe">Editar Perfil</a></li>
+        </ul>
+      </li>
+   <!-- MENU ADMINISTRADOR -->
+      <li class="nav-item dropdown" *ngIf="ehAdministrador">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Administrador
+        </a>
+        <ul class="dropdown-menu">
           <!-- Botão Admin-Início -->
           <li><a class="dropdown-item" routerLink="/usuario/admin"><i class="bi bi-house"></i> Admin Início</a></li>
           <!-- Botão Lista de Denúncias -->
-          <li><a class="dropdown-item" routerLink="/usuario/admin/lista-denuncia"><i class="bi bi-list"></i> Lista de Denúncias</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" routerLink="/usuario/admin/lista-denuncia"><i class="bi bi-list"></i> Lista de
+              Denúncias</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
           <!-- Botão Detalhe de Denúncia -->
-          <li><a class="dropdown-item" routerLink="/usuario/admin/detalhe-denuncia/test"><i class="bi bi-eye"></i> Detalhe de Denúncia</a></li>
+          <li><a class="dropdown-item" routerLink="/usuario/admin/detalhe-denuncia/test"><i class="bi bi-eye"></i>
+              Detalhe de Denúncia</a></li>
         </ul>
       </li>
+
     </ul>
+
     <ul class="navbar-nav ms-auto">
-      <button class="btn btn-outline-light ml-auto" (click)="logout()"> Logout  </button> &nbsp;&nbsp;
+      <button class="btn btn-outline-light ml-auto" (click)="logout()"> Logout </button> &nbsp;&nbsp;
     </ul>
   </div>
 </nav>

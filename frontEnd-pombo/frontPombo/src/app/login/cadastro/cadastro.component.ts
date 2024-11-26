@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../../shared/service/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../../shared/model/usuario';
 import Swal from 'sweetalert2';
@@ -18,6 +17,7 @@ export class CadastroComponent implements OnInit {
   ) {}
 
   public usuario: Usuario = new Usuario();
+  public fotoSelecionada: File | null = null;
 
   ngOnInit(): void {
 

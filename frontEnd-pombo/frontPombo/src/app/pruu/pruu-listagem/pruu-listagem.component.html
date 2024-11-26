@@ -101,7 +101,7 @@
 
     </div>
     <p class="message-text">{{ pruu.pruuConteudo }}</p>
-    <img *ngIf="pruu.pruuImagem" [src]="'data:image/jpeg;base64,' + pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image">
+    <img *ngIf="pruu.pruuImagem" [src]="'data:image/jpeg;base64,' + pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image" class="img-thumbnail" style="max-width: 250px; max-height: 250px; object-fit: contain;">
 
     <!-- LIKE -->
     <div class="d-flex justify-content-between align-items-center mt-2">

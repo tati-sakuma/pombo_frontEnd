@@ -1,1 +1,59 @@
-<p>usuario-detalhe works!</p>
+
+<app-home></app-home>
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Editar Perfil</h3>
+  <form>
+    <!-- Nome -->
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input
+        type="text"
+        id="nome"
+        class="form-control"
+        [(ngModel)]="usuario.nome"
+        name="nome"
+        placeholder="Digite seu nome"
+        required
+      />
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">E-mail</label>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        [(ngModel)]="usuario.email"
+        name="email"
+        placeholder="Digite seu e-mail"
+        required
+      />
+    </div>
+
+    <!-- Senha -->
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <input
+        type="password"
+        id="senha"
+        class="form-control"
+        [(ngModel)]="usuario.password"
+        name="senha"
+        placeholder="Digite sua nova senha"
+        minlength="6"
+      />
+    </div>
+
+    <!-- Upload de Foto -->
+    <div class="mb-3">
+      <label for="foto" class="form-label">Foto de Perfil</label>
+      <input type="file" id="foto" class="form-control" (change)="onFileSelected($event)" />
+    </div>
+
+    <!-- Botões -->
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-primary" (click)="salvarAlteracoes()">Salvar Alterações</button>
+    </div>
+  </form>
+</div>
