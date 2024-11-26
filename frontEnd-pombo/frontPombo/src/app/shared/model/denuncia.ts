@@ -3,10 +3,10 @@ import { Pruu } from "./pruu";
 import { Usuario } from "./usuario";
 
 export class Denuncia {
-  idDenuncia: string;
-  usuario: Usuario;
+  idDenuncia?: string;
+  usuario?: Usuario;
   pruu: Pruu;
   motivo: MotivoDenuncia;
-  dataDenuncia: Date;
-  analisada: boolean = false;
+  dataDenuncia?: Date;
+  analisada?: boolean = false;
 }

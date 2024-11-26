@@ -88,32 +88,44 @@
     </div>
     <p class="message-text">{{ pruu.pruuConteudo }}</p>
     <img *ngIf="pruu.pruuImagem" [src]="pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image">
-    <div>
+
+    <!-- LIKE -->
+    <div class="d-flex justify-content-between align-items-center mt-2">
       <span class="btn-like" (click)="atualizarLike(pruu)">
         <i class="bi" [ngClass]="pruu.estaCurtido ? 'bi-heart-fill' : 'bi-heart'"></i>
         {{ pruu.quantidadeLikes }}
       </span>
 
-
-
-      <!-- Botões de Editar e Excluir se for do usuário logado -->
-      <ng-container *ngIf="isLoggedUser(pruu)">
-        <button
-          class="btn btn-sm btn-primary"
-          (click)="editarPruu(pruu)"
-          title="Editar Pruu"
-        >
-          <i class="bi bi-pencil"></i> Editar
+      <!-- Dropdown para Editar/Excluir/Denunciar -->
+      <div class="dropdown">
+        <button class="btn btn-light btn-sm" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-three-dots"></i>
         </button>
-        <button
-          class="btn btn-sm btn-danger"
-          (click)="excluirPruu(pruu)"
-          title="Excluir Pruu"
-        >
-          <i class="bi bi-trash"></i> Excluir
-        </button>
-      </ng-container>
-      
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+          <!-- Se for do usuário logado, mostrar editar/excluir -->
+          <ng-container *ngIf="isLoggedUser(pruu); else notLoggedUser">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="editarPruu(pruu)">
+                <i class="bi bi-pencil"></i> Editar
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="excluirPruu(pruu)">
+                <i class="bi bi-trash"></i> Excluir
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- Se NÃO for do usuário logado, mostrar denunciar -->
+          <ng-template #notLoggedUser>
+            <li>
+              <a class="dropdown-item text-warning" href="javascript:void(0)" (click)="denunciarPruu(pruu)">
+                <i class="bi bi-flag"></i> Denunciar
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+      </div>
     </div>
     <hr>
   </div>

@@ -9,6 +9,8 @@ import { UsuarioService } from '../../shared/service/usuario.service';
 import { Usuario } from '../../shared/model/usuario';
 import { DenunciaService } from '../../shared/service/denuncia.service';
 import { jwtDecode } from 'jwt-decode';
+import { Denuncia } from '../../shared/model/denuncia';
+import { MotivoDenuncia } from '../../shared/model/enum/motivo.denuncia';
 
 @Component({
   selector: 'app-pruu-listagem',
@@ -24,6 +26,7 @@ export class PruuListagemComponent implements OnInit {
   public paginaAtual: number = 0;
   public readonly TAMANHO_PAGINA: number = 10;
   public loggedUserId: number; // Substitua isso pela lógica de obter o ID do usuário autenticado
+  public denuncia: Denuncia
 
   constructor(
     private pruuService: PruuService,
@@ -143,41 +146,84 @@ public pesquisarTodosUsuarios(): void {
     });
   }
 
-  public excluirPruu(pruu: PruuDTO) {
+  public excluirPruu(pruu: PruuDTO): void {
     Swal.fire({
       title: 'Tem certeza?',
-      text: 'Você não poderá reverter isso!',
+      text: 'Esta ação não pode ser desfeita!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sim, excluir!',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.pruuService.deletarPruu(pruu.pruuId).subscribe(() => {
-          Swal.fire('Excluído!', 'Seu Pruu foi excluído.', 'success');
-          this.pruus = this.pruus.filter((p) => p.pruuId !== pruu.pruuId);
+    }).then((resultado) => {
+      if (resultado.isConfirmed) {
+        this.pruuService.deletarPruu(pruu.pruuId).subscribe({
+          next: () => {
+            // Remove o Pruu da lista localmente
+            this.pruus = this.pruus.filter((p) => p.pruuId !== pruu.pruuId);
+            Swal.fire('Excluído!', 'O Pruu foi excluído com sucesso.', 'success');
+          },
+          error: (erro) => {
+            console.error('Erro ao excluir o Pruu:', erro);
+            Swal.fire('Erro!', 'Não foi possível excluir o Pruu.', 'error');
+          },
         });
       }
     });
   }
 
-  // public denunciarPruu() {
-  //   Swal.fire({
-  //     title: 'Denunciar Pruu',
-  //     input: 'textarea',
-  //     inputLabel: 'Explique o motivo da denúncia',
-  //     inputPlaceholder: 'Escreva aqui...',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Enviar',
-  //     cancelButtonText: 'Cancelar'
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.denunciaService.criarDenuncia(pruu.pruuId).subscribe(() => {
-  //         Swal.fire('Enviado!', 'Sua denúncia foi registrada.', 'success');
-  //       });
-  //     }
-  //   });
-  // }
+  public denunciarPruu(pruu: PruuDTO): void {
+    Swal.fire({
+      title: 'Denunciar Pruu',
+      input: 'select',
+      inputOptions: {
+        [MotivoDenuncia.SPAM]: 'Spam',
+        [MotivoDenuncia.OFENSIVO]: 'Ofensivo',
+        [MotivoDenuncia.FALSO]: 'Falso',
+      },
+      inputLabel: 'Selecione o motivo da denúncia',
+      inputPlaceholder: 'Escolha um motivo',
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Você precisa selecionar um motivo para denunciar!';
+        }
+        return null;
+      },
+    }).then((resultado) => {
+      if (resultado.isConfirmed) {
+        this.denuncia = {
+          motivo: resultado.value,
+          pruu: {
+            id: pruu.pruuId,
+            texto: pruu.pruuConteudo,
+            imagem: pruu.pruuImagem || '',
+            usuarioId: pruu.usuarioId,
+            usuarioNome: pruu.usuarioNome,
+            quantidadeLikes: pruu.quantidadeLikes,
+            dataHoraCriacao: new Date(pruu.criadoEm),
+            quantidadeDenuncias: pruu.quantidadeDenuncias
+          } ,
+
+        };
+
+        this.denunciaService.criarDenuncia(this.denuncia).subscribe({
+          next: (response) => {
+            Swal.fire('Enviado!', 'Sua denúncia foi registrada.', 'success');
+          },
+          error: (erro) => {
+            console.error('Erro ao denunciar:', erro);
+            Swal.fire(
+              'Erro!',
+              'Ocorreu um problema ao registrar sua denúncia.',
+              'error'
+            );
+          },
+        });
+      }
+    });
+  }
 
   public limpar(): void {
     this.pruuSeletor = new PruuSeletor();
