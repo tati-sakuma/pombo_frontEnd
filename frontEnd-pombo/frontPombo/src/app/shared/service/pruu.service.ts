@@ -16,9 +16,9 @@ export class PruuService {
   constructor(private httpClient: HttpClient) { }
 
 
-  public listarComFiltros(pruuSeletor: PruuSeletor, pagina: number, tamanho: number): Observable<Page<PruuDTO>> {
+  public listarComFiltros(pruuSeletor: PruuSeletor): Observable<Page<PruuDTO>> {
 
-    return this.httpClient.post<Page<PruuDTO>>(`${this.API}/filtros?pagina=${pagina}&tamanho=${tamanho}`, pruuSeletor);
+    return this.httpClient.post<Page<PruuDTO>>(`${this.API}/filtros`, pruuSeletor);
   }
 
   public atualizarPruu(pruuId: string, novoConteudo: string): Observable<void> {

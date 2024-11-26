@@ -9,4 +9,6 @@ export class PruuSeletor extends BaseSeletor {
   excluido?: string;
   bloqueado?: string;
   estaCurtido: boolean;
+  curtidosPeloUsuario:boolean;
+  curtidoPorUsuarioId: number;
 }

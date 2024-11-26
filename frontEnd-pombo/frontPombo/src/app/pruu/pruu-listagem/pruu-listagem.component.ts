@@ -25,7 +25,7 @@ export class PruuListagemComponent implements OnInit {
   public totalPaginas: number = 0;
   public paginaAtual: number = 0;
   public readonly TAMANHO_PAGINA: number = 10;
-  public loggedUserId: number; // Substitua isso pela lógica de obter o ID do usuário autenticado
+  public loggedUserId: number;
   public denuncia: Denuncia
 
   constructor(
@@ -40,6 +40,7 @@ export class PruuListagemComponent implements OnInit {
     this.pruuSeletor.limite = this.TAMANHO_PAGINA;
     this.pesquisar();
     this.pesquisarTodosUsuarios();
+
     let token;
     if(localStorage){
       token = localStorage.getItem('tokenUsuarioAutenticado');
@@ -53,6 +54,7 @@ export class PruuListagemComponent implements OnInit {
 
   public pesquisar(): void {
     let pagina = this.pruuSeletor.pagina - 1; // Ajustar para zero-based index
+    console.log('Pruu seletor:', this.pruuSeletor);
 
     if (isNaN(pagina) || pagina < 0) {
       console.error('Página inválida detectada:', pagina);
@@ -60,15 +62,15 @@ export class PruuListagemComponent implements OnInit {
       return;
     }
 
-    this.pruuService.listarComFiltros(this.pruuSeletor, this.pruuSeletor.pagina - 1, this.TAMANHO_PAGINA)
+    this.pruuService.listarComFiltros(this.pruuSeletor)
       .subscribe({
         next: (resultado: any) => {
-          console.log('Página Atual:', this.paginaAtual);
-          console.log('Total de Páginas:', this.totalPaginas);
-          console.log('Total de Páginas:', resultado.totalPages);
           this.pruus = resultado.content;
           this.totalPaginas = resultado.totalPages;
           this.paginaAtual = resultado.number + 1;
+          console.log('Página Atual:', this.paginaAtual);
+          console.log('Total de Páginas:', this.totalPaginas);
+          console.log('Total de Páginas:', resultado.totalPages);
         },
         error: (erro) => {
           let erroString = this.transformarErroEmString(erro.error);
@@ -198,7 +200,7 @@ public pesquisarTodosUsuarios(): void {
           pruu: {
             id: pruu.pruuId,
             texto: pruu.pruuConteudo,
-            imagem: pruu.pruuImagem || '',
+            foto: pruu.pruuImagem || '',
             usuarioId: pruu.usuarioId,
             usuarioNome: pruu.usuarioNome,
             quantidadeLikes: pruu.quantidadeLikes,

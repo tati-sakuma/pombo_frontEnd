@@ -31,6 +31,23 @@
             </select>
           </div>
         </div>
+        <div class="row mb-4">
+
+          <!-- Filtro para Pruus Curtidos -->
+          <div class="col-md-4">
+            <label for="curtidosPeloUsuario">Mostrar apenas curtidos</label>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="curtidosPeloUsuario"
+                [(ngModel)]="pruuSeletor.estaCurtido"
+                name="curtidosPeloUsuario"
+              />
+              <label class="form-check-label" for="curtidosPeloUsuario">Sim</label>
+            </div>
+          </div>
+        </div>
 
         <div class="row mb-3 ">
           <div class="col-md-4">
@@ -50,8 +67,6 @@
               }
             </select>
           </div>
-
-
 
         </div>
         <div class="row">
@@ -84,10 +99,9 @@
         <span class="message-time">{{ pruu.criadoEm| date:'dd/MM/yyyy HH:mm' }}</span>
       </div>
 
-
     </div>
     <p class="message-text">{{ pruu.pruuConteudo }}</p>
-    <img *ngIf="pruu.pruuImagem" [src]="pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image">
+    <img *ngIf="pruu.pruuImagem" [src]="'data:image/jpeg;base64,' + pruu.pruuImagem" alt="Ops... parece que o pombo voou!" class="pruu-image">
 
     <!-- LIKE -->
     <div class="d-flex justify-content-between align-items-center mt-2">
@@ -129,7 +143,6 @@
     </div>
     <hr>
   </div>
-
 
   <!-- PAGINAÇÃO -->
   <nav aria-label="Navegação de página">

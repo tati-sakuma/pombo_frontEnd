@@ -5,10 +5,9 @@ import { Usuario } from './usuario';
 export class Pruu {
   id!: string;
   texto!: string;
-  imagem: string;
+  foto: string;
   usuarioId!: number;
   usuarioNome!: string;
-  usuarioFotoPerfil?: string | null;
   quantidadeLikes!: number;
   quantidadeDenuncias!: number;
   dataHoraCriacao!: Date;
@@ -18,10 +17,9 @@ export class Pruu {
     const pruu = new Pruu();
     pruu.id = dto.pruuId;
     pruu.texto = dto.pruuConteudo;
-    pruu.imagem = dto.pruuImagem;
+    pruu.foto = dto.pruuImagem;
     pruu.usuarioId = dto.usuarioId;
     pruu.usuarioNome = dto.usuarioNome;
-    pruu.usuarioFotoPerfil = dto.usuarioFotoPerfil;
     pruu.quantidadeLikes = dto.quantidadeLikes;
     pruu.quantidadeDenuncias = dto.quantidadeDenuncias;
     pruu.dataHoraCriacao = new Date(dto.criadoEm);
