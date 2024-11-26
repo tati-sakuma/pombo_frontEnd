@@ -1,4 +1,4 @@
-<pre>{{usuario | json}}</pre>
+<!-- <pre>{{usuario | json}}</pre> -->
 <app-home></app-home>
 
 <div class="container mt-5">
@@ -53,8 +53,13 @@
     </div>
 
     <!-- Botões -->
-    <div class="d-flex justify-content-end">
-      <button type="button" class="btn btn-primary" (click)="salvarAlteracoes()">Salvar Alterações</button>
+    <div class="d-flex justify-content-between mt-4">
+      <button type="button" class="btn btn-primary btn-custom-width" (click)="editarUsuario()">
+        Salvar Alterações
+      </button>
+      <button type="button" class="btn btn-danger btn-custom-width" (click)="excluirUsuario()">
+        Excluir Conta
+      </button>
     </div>
   </form>
 </div>
