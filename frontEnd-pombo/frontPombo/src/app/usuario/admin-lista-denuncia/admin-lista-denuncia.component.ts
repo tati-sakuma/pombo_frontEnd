@@ -31,7 +31,6 @@ export class AdminListaDenunciaComponent implements OnInit {
       paginas ++
 
     }
-    console.log(this.denuncias);
 
   }
 

@@ -6,30 +6,28 @@
       <div class="card border-dark shadow rounded">
         <!-- Cabeçalho -->
         <div class="card-header custom-bg-primary">
-          <h3 class="text-center text-white">Lista de Denúncias</h3>
+          <h3 class="text-center text-white">Lista de Usuários</h3>
         </div>
         <!-- Corpo -->
         <div class="card-body">
           <table class="table table-hover border">
             <thead class="custom-bg-secondary text-white">
               <tr>
-                <th>ID da Denuncia</th>
-                <th>Denunciante Nome</th>
-                 <th>Motivo</th>
-                <th>Situação</th>
+                <th>ID Usuário</th>
+                <th>Nome</th>
+                 <th>CPF</th>
                 <th class="text-center">Ações</th>
               </tr>
             </thead>
             <tbody >
-            @for(denuncia of denuncias; track denuncia.denunciaId ){
+            @for(usuario of usuarios; track usuario.id ){
               <tr>
-                <td>{{ denuncia.denunciaId }}</td>
-                <td>{{ denuncia.denuncianteNome }}</td>
-                <td>{{ denuncia.denunciaMotivo }}</td>
-                <td>{{ denuncia.denunciaSituacao }}</td>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.cpf }}</td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-sm" (click)="navegarParaDetalhe(denuncia.denunciaId)">
-                    <i class="bi bi-eye"></i> Detalhar
+                  <button class="btn btn-primary btn-sm" (click)="navegarParaEdicao(usuario.id)">
+                    <i class="bi bi-pencil-square"></i> Editar
                   </button>
                 </td>
               </tr>

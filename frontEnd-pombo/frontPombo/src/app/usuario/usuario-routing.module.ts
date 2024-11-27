@@ -4,11 +4,13 @@ import { AdminInicioComponent } from './admin-inicio/admin-inicio.component';
 import { AdminListaDenunciaComponent } from './admin-lista-denuncia/admin-lista-denuncia.component';
 import { AdminDetalheDenunciaComponent } from './admin-detalhe-denuncia/admin-detalhe-denuncia.component';
 import { UsuarioDetalheComponent } from './usuario-detalhe/usuario-detalhe.component';
+import { AdminGerenciarUsuariosComponent } from './admin-gerenciar-usuarios/admin-gerenciar-usuarios.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminInicioComponent },
   { path: 'admin/lista-denuncia', component: AdminListaDenunciaComponent },
   { path: 'admin/detalhe-denuncia/:id', component: AdminDetalheDenunciaComponent },
+  { path: 'admin/gerir-usuarios', component: AdminGerenciarUsuariosComponent },
   { path: 'detalhe', component: UsuarioDetalheComponent },
 ];
 

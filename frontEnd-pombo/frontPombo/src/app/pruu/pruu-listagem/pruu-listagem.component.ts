@@ -54,10 +54,10 @@ export class PruuListagemComponent implements OnInit {
 
   public pesquisar(): void {
     let pagina = this.pruuSeletor.pagina - 1; // Ajustar para zero-based index
-    console.log('Pruu seletor:', this.pruuSeletor);
+
 
     if (isNaN(pagina) || pagina < 0) {
-      console.error('Página inválida detectada:', pagina);
+
       this.pruuSeletor.pagina = 1; // Reinicializa a página como 1
       return;
     }
@@ -68,9 +68,6 @@ export class PruuListagemComponent implements OnInit {
           this.pruus = resultado.content;
           this.totalPaginas = resultado.totalPages;
           this.paginaAtual = resultado.number + 1;
-          console.log('Página Atual:', this.paginaAtual);
-          console.log('Total de Páginas:', this.totalPaginas);
-          console.log('Total de Páginas:', resultado.totalPages);
         },
         error: (erro) => {
           let erroString = this.transformarErroEmString(erro.error);
